@@ -3,7 +3,7 @@ export const troop = {
   name: "Scouts BSA Troop 1135",
   joinUrl: "https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762",
   story: "Troop 1135 is a youth-led Scouts BSA troop where girls explore the outdoors, build friendships, and try something new. Plan an outing, learn a skill, or lead your patrol. You don't have to know it all to belong here.",
-  meetingDetails: "Contact our adult leaders for the current meeting time and location.",
+  meetingDetails: 'Click the Visit a Meeting button below, then select "Request More Information" to connect with our adult leaders and get the current meeting time and location.',
   charterOrganization: "Charter organization: to be added",
   contactLabel: "Contact our adult troop leaders ↗",
 };
