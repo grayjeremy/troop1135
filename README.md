@@ -22,6 +22,12 @@ Open `http://localhost:8000`. Use a local server rather than double-clicking the
 
 All navigation, imports, and local assets use relative paths, so the site works under a GitHub Pages project prefix or a custom domain. No secrets, environment variables, API keys, or paid services are needed. HTTPS is provided by GitHub Pages. `.nojekyll` preserves the files as a plain static site.
 
+### Browser caching after deployments
+
+Stylesheets, JavaScript entry points, and their imported modules/data use a matching `?v=20261029-recruitment` release suffix. This avoids mixing the new homepage markup with the previous cached script (which expected the old Eagle gallery and could stop before rendering adventure photos).
+
+When deploying changes to CSS, JavaScript, or data, replace that release value consistently in `index.html`, `eagles/index.html`, `js/main.js`, `js/eagle.js`, and its test in `tests/site.test.js`. Re-run `npm run build` to update any generated Eagle pages, then deploy the files together. Query strings are supported by GitHub Pages and do not change the PDF URL. A visitor who already has the old page open can refresh; **Ctrl+Shift+R** bypasses the browser cache for an immediate recovery on the existing deployment.
+
 ## Update troop information
 
 The homepage follows six sections: Hero → Adventures → About → Why Scouting → Achievement → Join. Keep `#home`, `#adventures`, `#about`, `#parents`, `#eagles`, and `#join` stable for existing links. `#join-troop` targets the formal joining steps; `#contact` remains a contact anchor within Join. Primary calls to action are labeled **Visit a Meeting**.

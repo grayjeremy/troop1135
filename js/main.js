@@ -1,6 +1,6 @@
-import { troop, faqs, events } from "../data/troop.js";
-import { albums } from "../data/albums.js";
-import { element, setupNavigation, setupMotion } from "./shared.js";
+import { troop, faqs, events } from "../data/troop.js?v=20261029-recruitment";
+import { albums } from "../data/albums.js?v=20261029-recruitment";
+import { element, setupNavigation, setupMotion } from "./shared.js?v=20261029-recruitment";
 
 document.querySelector("#troop-story").textContent = troop.story;
 document.querySelector("#meeting-details").textContent = troop.meetingDetails;

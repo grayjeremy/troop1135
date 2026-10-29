@@ -1,6 +1,6 @@
-import { eagles } from "../data/eagles.js";
-import { troop } from "../data/troop.js";
-import { element, createEagleCard, setupNavigation, setupMotion } from "./shared.js";
+import { eagles } from "../data/eagles.js?v=20261029-recruitment";
+import { troop } from "../data/troop.js?v=20261029-recruitment";
+import { element, createEagleCard, setupNavigation, setupMotion } from "./shared.js?v=20261029-recruitment";
 
 const root = document.body.dataset.siteRoot;
 const content = document.querySelector("#profile-content");

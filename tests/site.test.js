@@ -56,6 +56,22 @@ test("six sections follow the experience-to-membership recruitment journey", () 
   assert.match(html, /href="#adventures">Explore Our Adventures/);
 });
 
+test("page assets and module dependencies use the same release version to avoid stale deployments", async () => {
+  const release = "20261029-recruitment";
+  for (const file of ["index.html", "eagles/index.html"]) {
+    const source = await readFile(new URL(file, root), "utf8");
+    const assets = [...source.matchAll(/(?:src|href)="([^"]+\.(?:js|css)\?[^"]+)"/g)];
+    assert.equal(assets.length, 2, `Version both CSS and module entry in ${file}`);
+    for (const [, asset] of assets) assert.equal(new URL(asset, root).searchParams.get("v"), release);
+  }
+  for (const file of ["js/main.js", "js/eagle.js"]) {
+    const source = await readFile(new URL(file, root), "utf8");
+    for (const [, imported] of source.matchAll(/from "([^"]+)"/g)) {
+      assert.equal(new URL(imported, root).searchParams.get("v"), release, `Unversioned dependency in ${file}`);
+    }
+  }
+});
+
 test("practical FAQs cover eligibility, costs, visits, safety, and uniform essentials", () => {
   const faq = faqs.find((item) => item.question === "What do new Scouts need to buy?");
   assert.match(faq.answer, /Class A uniform shirt and a Scouts BSA Handbook/);
@@ -181,9 +197,9 @@ test("permanent profile generator writes nested project-safe pages and rejects u
     await run(process.execPath, [join(directory, "scripts", "build-eagles.js")]);
     const output = await readFile(join(directory, "eagles", "test-eagle", "index.html"), "utf8");
     assert.match(output, /data-site-root="\.\.\/\.\.\/" data-scout-id="test-eagle"/);
-    assert.match(output, /src="\.\.\/\.\.\/js\/eagle.js"/);
+    assert.match(output, /src="\.\.\/\.\.\/js\/eagle.js\?v=20261029-recruitment"/);
     assert.match(output, /Test &amp; &quot;Scout&quot;/);
-    assert.match(output, /href="\.\.\/\.\.\/css\/styles.css"/);
+    assert.match(output, /href="\.\.\/\.\.\/css\/styles.css\?v=20261029-recruitment"/);
     assert.match(output, /og:image" content="\.\.\/\.\.\/images\/albums\/trail-days\/hiking.jpg"/);
     await writeFile(join(directory, "data", "eagles.js"), 'export const eagles = [{id: "../escape"}];');
     await assert.rejects(run(process.execPath, [join(directory, "scripts", "build-eagles.js")]), /Invalid or duplicate Eagle ID/);
