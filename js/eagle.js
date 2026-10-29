@@ -1,4 +1,4 @@
-import { eagles, sampleEagles } from "../data/eagles.js";
+import { eagles } from "../data/eagles.js";
 import { troop } from "../data/troop.js";
 import { element, createEagleCard, setupNavigation, setupMotion } from "./shared.js";
 
@@ -12,12 +12,12 @@ content.replaceChildren();
 
 if (!id) {
   content.append(element("p", { class: "eyebrow" }, "THE TROOP 1135 LEGACY COLLECTION"), element("h1", { style: "color:var(--forest);font-size:clamp(40px,6vw,72px)" }, "Our Eagle Scouts"));
-  if (!eagles.length) content.append(element("p", { class: "sample-notice", style: "color:var(--plum)" }, "Our archive is ready to grow. These are illustrative design previews, not real Scout records."));
+  if (!eagles.length) content.append(element("p", { class: "archive-empty" }, "We're gathering the stories for this archive. Verified troop profiles will be shared here when they're ready."), element("a", { class: "text-link", href: `${root}index.html#join` }, "Visit a Meeting →"));
   const grid = element("div", { class: "eagle-grid" });
-  (eagles.length ? eagles : sampleEagles).forEach((scout) => grid.append(createEagleCard(scout, root)));
+  eagles.forEach((scout) => grid.append(createEagleCard(scout, root)));
   content.append(grid);
 } else {
-  const scout = [...eagles, ...sampleEagles].find((profile) => profile.id === id);
+  const scout = eagles.find((profile) => profile.id === id);
   if (!scout) {
     document.title = "Profile not found | Troop 1135";
     const error = element("div", { class: "profile-error" });

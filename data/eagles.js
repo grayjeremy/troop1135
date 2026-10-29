@@ -15,7 +15,7 @@
 // }
 export const eagles = [];
 
-// Clearly labeled fictional previews let leaders see the reusable design before real records are added.
+// Layout fixtures only: kept for development tests, never rendered on the public homepage or archive.
 export const sampleEagles = [
   {
     id: "preview-trail-builder", name: "The trail builder", year: "YOUR YEAR",

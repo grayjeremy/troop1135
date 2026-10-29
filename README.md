@@ -24,6 +24,10 @@ All navigation, imports, and local assets use relative paths, so the site works 
 
 ## Update troop information
 
+The homepage follows six sections: Hero → Adventures → About → Why Scouting → Achievement → Join. Keep `#home`, `#adventures`, `#about`, `#parents`, `#eagles`, and `#join` stable for existing links. `#join-troop` targets the formal joining steps; `#contact` remains a contact anchor within Join. Primary calls to action are labeled **Visit a Meeting**.
+
+The forest-green Join section separates **A / Visit a Meeting** (including the optional PDF guide) from **B / Join the Troop** (official listing, electronic youth application, and initial purchases). The FAQ holds practical details rather than repeating them throughout the page. No purchases or printed guide are required to visit.
+
 | Content | Where to edit |
 | --- | --- |
 | Story, meeting details, charter organization, adult contact label | `data/troop.js` |
@@ -39,13 +43,15 @@ All navigation, imports, and local assets use relative paths, so the site works 
 
 Meeting times, location, history, and charter organization have intentionally **not** been invented. Confirm them with troop leadership before filling in the placeholders. All visit/contact/request-information links go to the supplied official BeAScout unit listing. Do not substitute children's email addresses or phone numbers.
 
+**Still needs leader confirmation:** current meeting time/location, registration fees and troop dues, activity costs and assistance, outing frequency, and participation expectations. Until confirmed, the page directs families to adult leaders rather than publishing estimates. Confirm eligibility and the applicable youth protection/supervision arrangements with leaders as part of a visit.
+
 The Join section includes a printable first-meeting companion with prompts for observing the meeting, meeting new friends, and next steps. The downloadable PDF is an unchanged copy of the supplied adventure flyer, hosted locally for GitHub Pages; it is not embedded or loaded until a visitor chooses to download it. To update it, replace `documents/troop-1135-first-meeting-flyer.pdf`, regenerate the small cover thumbnail at `images/first-meeting-flyer.webp`, and update the displayed file size in `index.html`. Keep the stable filename so existing links continue to work. Review each replacement for private information before publishing.
 
 Events are optional and hidden when the array is empty. Add an event object with `title`, `date` (`YYYY-MM-DD`), and `detail`. Use public open-house information only; keep private itineraries and live youth locations off the public site. Remove expired events as part of regular maintenance.
 
 ## Add an Eagle Scout
 
-The starter has no actual Eagle records. Three **clearly labeled illustrative previews** demonstrate the design; they are not real Scouts or achievements. They disappear automatically once the `eagles` array contains a real record.
+The homepage now shows only a small, general achievement preview, not an "Our Eagle Scouts" collection. The archive displays verified records from `eagles` only; when none are available it explains that stories are being gathered. Fictional layout fixtures remain in `sampleEagles` for development tests, but are never rendered publicly, including via old sample-profile query links. Add verified records when ready; the full card/profile components and page generator are preserved.
 
 1. Obtain consent for the public name, portrait, project story, photos, and any impact statistics.
 2. Create `images/eagles/SCOUT-SLUG/` and add optimized photographs.
@@ -89,7 +95,7 @@ Use paths relative to the site root inside data files, without a leading `/` (fo
 
 The About section and adventure gallery use 19 photographs selected from the troop leadership-supplied `1452 Pictures` collection, confirmed by the site owner as the correct troop photos. They are organized into hiking, summer camp, Sea Base, and marine-stewardship albums. Web copies are optimized WebP files with a maximum dimension of 1400px and under 350KB each. EXIF/GPS, XMP, and other source metadata have been removed; original photographs are unchanged and are not included in the website.
 
-The mountain hero and the clearly labeled illustrative Eagle cards still use stock imagery. Real youth photos are deliberately **not** used for fictional Eagle profiles. No Eagle achievements or Scout names have been inferred from photographs. Confirm publication consent and your organization's policies before publishing identifiable youth. Strip GPS/EXIF metadata from future uploads too. Do not publish youth contact information, private rosters, birthdays, or live locations.
+The mountain hero uses stock imagery. The non-public Eagle layout fixtures also reference stock images; real youth photos are deliberately **not** used for fictional profiles. No Eagle achievements or Scout names have been inferred from photographs. Confirm publication consent and your organization's policies before publishing identifiable youth. Strip GPS/EXIF metadata from future uploads too. Do not publish youth contact information, private rosters, birthdays, or live locations.
 
 Source images (the [Unsplash license](https://unsplash.com/license) permits downloading and using images; verify applicable terms before reuse):
 

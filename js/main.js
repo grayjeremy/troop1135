@@ -1,7 +1,6 @@
 import { troop, faqs, events } from "../data/troop.js";
 import { albums } from "../data/albums.js";
-import { eagles, sampleEagles } from "../data/eagles.js";
-import { element, createEagleCard, setupNavigation, setupMotion } from "./shared.js";
+import { element, setupNavigation, setupMotion } from "./shared.js";
 
 document.querySelector("#troop-story").textContent = troop.story;
 document.querySelector("#meeting-details").textContent = troop.meetingDetails;
@@ -27,11 +26,6 @@ faqList.addEventListener("toggle", (event) => {
     });
   }
 }, true);
-
-const eagleGrid = document.querySelector("#eagle-grid");
-const profiles = eagles.length ? eagles : sampleEagles;
-document.querySelector("#eagle-notice").hidden = eagles.length > 0;
-profiles.forEach((scout) => eagleGrid.append(createEagleCard(scout)));
 
 const eventPanel = document.querySelector("#events");
 if (events.length) {
@@ -111,7 +105,7 @@ function renderAlbums(filter = "all") {
     card.addEventListener("click", () => openAlbum(album, card));
     grid.append(card);
   }
-  document.querySelector("#gallery-status").textContent = visibleAlbums.length ? `${visibleAlbums.length} ${visibleAlbums.length === 1 ? "album" : "albums"}. Real adventures. Our favorite memories, together.` : "New adventures are on the horizon. Check back for more albums.";
+  document.querySelector("#gallery-status").textContent = visibleAlbums.length ? `${visibleAlbums.length} ${visibleAlbums.length === 1 ? "album" : "albums"}. Pick an adventure to see more.` : "New adventures are on the horizon. Check back for more albums.";
 }
 renderAlbums();
 document.querySelectorAll("[data-filter]").forEach((button) => {
@@ -151,7 +145,8 @@ if ("IntersectionObserver" in window) {
     for (const entry of entries) {
       if (entry.isIntersecting) {
         document.querySelectorAll('.site-nav a[href^="#"]').forEach((link) => {
-          if (link.hash === `#${entry.target.id}`) link.setAttribute("aria-current", "location");
+          const target = document.querySelector(link.hash);
+          if (target === entry.target || entry.target.contains(target)) link.setAttribute("aria-current", "location");
           else link.removeAttribute("aria-current");
         });
       }

@@ -34,8 +34,8 @@
     </a>
     <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span></span><span></span></button>
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-      <a href="#home" aria-current="location">Home</a><a href="#about">About</a><a href="#join">Join</a><a href="#adventures">Adventures</a><a href="#eagles">Eagles</a><a href="#parents">Parents</a><a href="#contact">Contact</a>
-      <a class="button button-small" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Find your adventure <svg class="icon"><use href="#i-arrow"/></svg></a>
+      <a href="#home" aria-current="location">Home</a><a href="#adventures">Adventures</a><a href="#about">About</a><a href="#parents">Why Scouting</a><a href="#eagles">Achievement</a><a href="#join-troop">How to Join</a>
+      <a class="button button-small" href="#join">Visit a Meeting <svg class="icon"><use href="#i-arrow"/></svg></a>
     </nav>
   </header>
   <main id="main">
@@ -46,14 +46,14 @@
         <p class="eyebrow light"><span class="little-line"></span> SCOUTS BSA · TROOP 1135</p>
         <h1 id="hero-title">Find your trail.<br><em>Leave your mark.</em></h1>
         <p class="hero-motto">Adventure. Leadership. Service.</p>
-        <p class="hero-description">Building confident young women through adventure,<br class="desktop-break"> leadership, service, and the great outdoors.</p>
+        <p class="hero-description">New adventures. Real friendships.<br>Find your place with the girls of Troop 1135.</p>
         <div class="button-row">
-          <a class="button button-cream" href="#join">Join Troop 1135 <svg class="icon"><use href="#i-arrow"/></svg></a>
-          <a class="button button-outline-light" href="#about">Learn about our troop</a>
+          <a class="button button-cream" href="#join">Visit a Meeting <svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a class="button button-outline-light" href="#adventures">Explore Our Adventures</a>
         </div>
       </div>
       <div class="hero-bottom container">
-        <a class="scroll-cue" href="#about"><span class="down-arrow">↓</span> A LITTLE CURIOSITY. A BIG ADVENTURE.</a>
+        <a class="scroll-cue" href="#adventures"><span class="down-arrow">↓</span> A LITTLE CURIOSITY. A BIG ADVENTURE.</a>
         <span class="hero-note"><span class="status-dot"></span> MORE OUT THERE. MORE IN YOU.</span>
       </div>
       <div class="hero-stamp" aria-hidden="true"><span>TAKE THE</span><svg class="icon"><use href="#i-mountain"/></svg><strong>SCENIC ROUTE</strong><span>TROOP 1135</span></div>
@@ -62,6 +62,21 @@
     <div class="values-strip" aria-label="Our values">
       <span>GIRL-LED. <em>Always.</em></span><span class="strip-star">✳</span><span>OUTDOORS. <em>Together.</em></span><span class="strip-star">✳</span><span>READY FOR <em>what's next.</em></span>
     </div>
+
+    <section id="adventures" class="section adventures-section" aria-labelledby="adventures-title">
+      <div class="container">
+        <div class="section-heading reveal"><div><p class="eyebrow">COLLECT MOMENTS, NOT THINGS</p><h2 id="adventures-title">This is what <em>out there</em> looks like.</h2></div><p>A few favorite moments from our troop.<br>Pick an album. Picture yourself here.</p></div>
+        <div class="gallery-filters" role="group" aria-label="Filter adventure albums">
+          <button type="button" class="filter active" data-filter="all" aria-pressed="true">All adventures <span>↗</span></button>
+          <button type="button" class="filter" data-filter="trail" aria-pressed="false">On the trail</button>
+          <button type="button" class="filter" data-filter="camp" aria-pressed="false">At camp</button>
+          <button type="button" class="filter" data-filter="water" aria-pressed="false">On the water</button>
+          <button type="button" class="filter" data-filter="service" aria-pressed="false">Giving back</button>
+        </div>
+        <div class="adventure-grid" id="adventure-grid"></div>
+        <p class="gallery-note" id="gallery-status" aria-live="polite">From the troop photo album. Pick an adventure to see more.</p>
+      </div>
+    </section>
 
     <section id="about" class="section about-section container" aria-labelledby="about-title">
       <div class="about-photos reveal">
@@ -74,104 +89,92 @@
         <p class="eyebrow">A LITTLE ABOUT US</p>
         <h2 id="about-title">Big adventures.<br>Even bigger <em>possibilities.</em></h2>
         <!-- Troop leaders: edit the story and meeting information in data/troop.js. -->
-        <p class="section-intro" id="troop-story">We're Troop 1135. A female Scouts BSA troop where girls take the lead, try something new, and discover what they're capable of. Preferably with a little dirt on their boots.</p>
-        <p>From a first night under the stars to leading a community project, Scouting is about more than the skills you learn. It's about who you become along the way.</p>
+        <p class="section-intro" id="troop-story">Troop 1135 is a youth-led Scouts BSA troop where girls explore the outdoors, build friendships, and try something new. Plan an outing, learn a skill, or lead your patrol. You don't have to know it all to belong here.</p>
         <div class="about-features">
           <div><svg class="icon"><use href="#i-tree"/></svg><span><strong>Outside is our classroom</strong><small>Campouts, trail days & new horizons</small></span></div>
-          <div><svg class="icon"><use href="#i-compass"/></svg><span><strong>Girls lead the way</strong><small>Real responsibility. Growing confidence.</small></span></div>
+          <div><svg class="icon"><use href="#i-compass"/></svg><span><strong>Girls lead the way</strong><small>Your ideas. Your patrol. Your next challenge.</small></span></div>
           <div><svg class="icon"><use href="#i-star"/></svg><span><strong>Do good. Grow together.</strong><small>Service, merit badges & friendships</small></span></div>
         </div>
-        <a class="text-link" href="#join">There's a place for you here <svg class="icon"><use href="#i-arrow"/></svg></a>
-      </div>
-    </section>
-
-    <section id="join" class="section join-accent" aria-labelledby="join-title">
-      <div class="join-section container">
-      <div class="join-copy reveal">
-        <p class="eyebrow">NO EXPERIENCE REQUIRED. JUST CURIOSITY.</p>
-        <h2 id="join-title">Your adventure<br><em>starts here.</em></h2>
-        <p class="section-intro">You don't have to know every knot.<br>Or own the perfect pair of hiking boots.</p>
-        <p>Just bring yourself. Scouts BSA is a program where young people learn outdoor skills, practice leadership, serve their communities, and work toward meaningful goals. Here, girls do all of that together.</p>
-        <p>Come meet the troop, see a meeting in action, and ask all your questions. No commitment. No pressure. Just a friendly first step.</p>
-        <a class="button button-cream" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Visit a meeting <svg class="icon"><use href="#i-arrow"/></svg></a>
-        <span class="handwritten">Every great adventure starts with a hello.</span>
-        <!-- Troop leaders: replace the PDF in documents/ and update its thumbnail and size label together. -->
-        <a class="meeting-flyer" href="./documents/troop-1135-first-meeting-flyer.pdf" download="Troop-1135-First-Meeting-Flyer.pdf">
-          <img src="./images/first-meeting-flyer.webp" alt="" width="360" height="463" loading="lazy">
-          <span class="meeting-flyer-copy">
-            <span class="meeting-flyer-label">YOUR FIRST-MEETING COMPANION</span>
-            <strong>Bring this to your first meeting.</strong>
-            <span>Print our adventure flyer to jot down what you discover and the friends you meet.</span>
-            <span class="meeting-flyer-download">Download the flyer <span aria-hidden="true">↓</span><small>PDF · 6 MB</small></span>
-          </span>
-        </a>
-      </div>
-      <div class="join-guide reveal">
-        <div class="guide-heading"><svg class="icon"><use href="#i-compass"/></svg><span>YOUR FIRST TRAIL GUIDE</span><span>01—06</span></div>
-        <div id="faq-list" class="faq-list"></div>
-        <div class="meeting-note"><span class="status-dot"></span><p><strong>Let's plan your first visit.</strong><br><span id="meeting-details">Contact our adult leaders for the current meeting time and location.</span></p></div>
-      </div>
-      </div>
-    </section>
-
-    <section id="adventures" class="section adventures-section" aria-labelledby="adventures-title">
-      <div class="container">
-        <div class="section-heading reveal"><div><p class="eyebrow">COLLECT MOMENTS, NOT THINGS</p><h2 id="adventures-title">This is what <em>out there</em> looks like.</h2></div><p>New trails. Campfire stories. The kind of<br class="desktop-break"> weekends you'll talk about for years.</p></div>
-        <div class="gallery-filters" role="group" aria-label="Filter adventure albums">
-          <button type="button" class="filter active" data-filter="all" aria-pressed="true">All adventures <span>↗</span></button>
-          <button type="button" class="filter" data-filter="trail" aria-pressed="false">On the trail</button>
-          <button type="button" class="filter" data-filter="camp" aria-pressed="false">At camp</button>
-          <button type="button" class="filter" data-filter="water" aria-pressed="false">On the water</button>
-          <button type="button" class="filter" data-filter="service" aria-pressed="false">Giving back</button>
-        </div>
-        <div class="adventure-grid" id="adventure-grid"></div>
-        <p class="gallery-note" id="gallery-status" aria-live="polite">Real adventures. Our favorite memories, together.</p>
-        <p class="photo-disclosure">From the troop photo album. Pick an adventure to see more.</p>
-      </div>
-    </section>
-
-    <section id="eagles" class="section eagles-section" aria-labelledby="eagles-title">
-      <div class="container">
-        <div class="section-heading reveal"><div><p class="eyebrow light">THE HIGHEST RANK. A LIFELONG IMPACT.</p><h2 id="eagles-title">Our Eagle <em>Scouts.</em></h2></div><p>Celebrating the young women who have<br class="desktop-break"> reached Scouting's highest rank.</p></div>
-        <div class="eagle-intro reveal"><span class="eagle-emblem" aria-hidden="true"><svg class="icon"><use href="#i-star"/></svg></span><p>Earned through perseverance. Defined by service.<br><strong>A summit worth celebrating.</strong></p><span class="trail-line" aria-hidden="true"></span><span class="archive-label">THE TROOP 1135<br>LEGACY COLLECTION</span></div>
-        <p class="sample-notice" id="eagle-notice">Our Eagle archive is ready to grow. The cards below are illustrative design previews, not real Scout records.</p>
-        <div class="eagle-grid" id="eagle-grid"></div>
-        <p class="eagle-footer">Different journeys. One extraordinary achievement. <svg class="icon"><use href="#i-star"/></svg></p>
+        <a class="text-link" href="#parents">Learn About Scouting <svg class="icon"><use href="#i-arrow"/></svg></a>
       </div>
     </section>
 
     <section id="parents" class="section parents-section container" aria-labelledby="parents-title">
       <div class="parents-intro reveal">
-        <p class="eyebrow">FOR THE PEOPLE CHEERING THEM ON</p>
+        <p class="eyebrow">WHY SCOUTING MATTERS</p>
         <h2 id="parents-title">The adventure is real.<br>The growth is <em>for life.</em></h2>
         <p>She comes for the campouts. She grows into someone who steps up, cares for others, and trusts herself.</p>
         <blockquote class="parents-pullquote">The badges mark the journey.<br><em>Who she becomes is the why.</em></blockquote>
-        <a class="text-link" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Talk with us about her next chapter <svg class="icon"><use href="#i-arrow"/></svg></a>
+        <a class="text-link" href="#join">Visit a Meeting <svg class="icon"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="aims-panel">
         <p class="eyebrow">FOUR AIMS. A WORLD OF POSSIBILITY.</p>
         <div class="scouting-aims" role="group" aria-label="The four aims of Scouting">
-          <article class="aim-card reveal" aria-label="Character development"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><span>01</span></div><h3>Character</h3><strong>Choose well.</strong><p>Keep promises. Own mistakes. Do what's right.</p></article>
-          <article class="aim-card reveal" aria-label="Citizenship training"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-tree"/></svg><span>02</span></div><h3>Citizenship</h3><strong>Give back.</strong><p>Notice a need. Take action. Make a difference.</p></article>
-          <article class="aim-card reveal" aria-label="Personal fitness"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-mountain"/></svg><span>03</span></div><h3>Personal fitness</h3><strong>Grow stronger.</strong><p>Healthy habits. A resilient mind. Her own pace.</p></article>
-          <article class="aim-card reveal" aria-label="Leadership development"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-compass"/></svg><span>04</span></div><h3>Leadership</h3><strong>Step up. Lift others.</strong><p>Find her voice. Guide a team. Help others thrive.</p></article>
+          <article class="aim-card reveal" aria-label="Character development"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><span>01</span></div><h3>Character Development</h3><strong>Choose well.</strong><p>Keep a promise to your patrol. Own a mistake. Try again.</p></article>
+          <article class="aim-card reveal" aria-label="Citizenship training"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-tree"/></svg><span>02</span></div><h3>Citizenship Training</h3><strong>Give back.</strong><p>Listen to your community. Turn a need into a service project.</p></article>
+          <article class="aim-card reveal" aria-label="Personal fitness"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-mountain"/></svg><span>03</span></div><h3>Personal Fitness</h3><strong>Grow stronger.</strong><p>Build healthy habits and resilience, one trail at a time.</p></article>
+          <article class="aim-card reveal" aria-label="Leadership development"><div class="aim-card-top"><svg class="icon" aria-hidden="true"><use href="#i-compass"/></svg><span>04</span></div><h3>Leadership Development</h3><strong>Step up. Lift others.</strong><p>Plan the outing. Guide your team. Help a new Scout belong.</p></article>
         </div>
       </div>
-      <div class="parent-support" role="group" aria-label="How we support Scouts and families">
-        <article class="parent-card reveal"><div><h3>Prepared, not pressured.</h3><p>We'll walk you through costs, uniforms, and gear. Start small.</p></div></article>
-        <article class="parent-card reveal"><div><h3>Girl-led. Adult-supported.</h3><p>Girls lead. Adults guide and follow Scouting's youth protection requirements.</p></div></article>
-        <article class="parent-card reveal"><div><h3>Room to find her thing.</h3><p>New interests, meaningful goals, and a journey at her own pace.</p></div></article>
-      </div>
-      <div id="events" class="events-panel" hidden></div>
     </section>
 
-    <section id="contact" class="contact-section" aria-labelledby="contact-title">
-      <div class="container contact-inner reveal"><p class="eyebrow light">THE BEST STORIES START WITH SHOWING UP</p><h2 id="contact-title">Ready for your<br><em>next adventure?</em></h2><p>There's a trail to explore. A team to belong to.<br>And a whole lot of possibility ahead.</p><a class="button button-cream" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Let's meet. Let's go. <svg class="icon"><use href="#i-arrow"/></svg></a><div class="contact-options"><a data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Visit a troop meeting</a><span>·</span><a data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Contact the troop</a><span>·</span><a data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Request information</a></div></div>
-      <svg class="contact-mountains" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true"><path d="m0 180 170-95 90 60 180-135 140 110 100-60 120 90 160-120 120 85 100-60 160 100v45H0Z" fill="currentColor"/><path d="m0 195 230-65 210 55 190-100 260 95 190-60 160 50 200-80v110H0Z" fill="#153a2d"/></svg>
+    <section id="eagles" class="section eagles-section achievement-section" aria-labelledby="eagles-title">
+      <div class="container achievement-inner reveal">
+        <span class="achievement-mark" aria-hidden="true"><svg class="icon"><use href="#i-star"/></svg></span>
+        <div><p class="eyebrow light">A WORLD OF POSSIBILITY</p><h2 id="eagles-title">See how far <em>you can go.</em></h2><p>Explore new interests through merit badges. Take on leadership. Create a service project that matters. Eagle Scout, Scouting's highest rank, is one path you can work toward. Your journey is yours.</p><a class="text-link" href="./eagles/">Explore the Eagle Scout archive <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </section>
+
+    <section id="join" class="section join-accent" aria-labelledby="join-title">
+      <div class="join-section container">
+        <div class="join-copy join-heading reveal">
+          <p class="eyebrow">NO EXPERIENCE REQUIRED. JUST CURIOSITY.</p>
+          <h2 id="join-title">Your adventure <em>starts here.</em></h2>
+          <p class="section-intro">Just show up. We'll take it from there.</p>
+        </div>
+        <div class="join-copy visit-stage reveal" id="visit-meeting">
+          <p class="stage-label">A / TRY IT OUT</p>
+          <h3>Visit a Meeting</h3>
+          <p>Come meet the Scouts, see a meeting in action, and ask questions. No experience or special equipment required. Families are welcome, and there's no commitment to join.</p>
+          <p id="meeting-details">Contact our adult leaders for the current meeting time and location.</p>
+          <a class="button button-cream" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Visit a Meeting <svg class="icon"><use href="#i-arrow"/></svg></a>
+          <!-- Keep this PDF path stable. Replace the PDF, thumbnail, and size label together when updating. -->
+          <a class="meeting-flyer" href="./documents/troop-1135-first-meeting-flyer.pdf" download="Troop-1135-First-Meeting-Flyer.pdf">
+            <img src="./images/first-meeting-flyer.webp" alt="" width="360" height="463" loading="lazy">
+            <span class="meeting-flyer-copy">
+              <span class="meeting-flyer-label">OPTIONAL. JUST FOR FUN.</span>
+              <strong>Download Your First Meeting Adventure Guide</strong>
+              <span>Discover how the troop works and collect signatures from the Scouts you meet. Print it if you'd like; you don't need it to visit.</span>
+              <span class="meeting-flyer-download">Bring a little curiosity <span aria-hidden="true">↓</span><small>PDF · 6 MB</small></span>
+            </span>
+          </a>
+        </div>
+        <div class="join-guide membership-stage reveal" id="join-troop">
+          <p class="stage-label">B / WHEN YOU'RE READY</p>
+          <h3>Join the Troop</h3>
+          <ol class="joining-steps">
+            <li><strong>Visit a Troop Meeting</strong><p>Meet the Scouts and decide if the troop feels like your kind of adventure.</p></li>
+            <li><strong>Find Troop 1135 on BeAScout.org</strong><p><a class="faq-link" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Open our official troop listing</a> to get started.</p></li>
+            <li><strong>Complete the Electronic Youth Application</strong><p>A parent or guardian completes the application through Scouting America's official online registration process.</p></li>
+          </ol>
+          <div class="starter-kit"><h4>Start with just two things.</h4><p>For joining: a Class A uniform shirt and a Scouts BSA Handbook. Find them at the <a class="faq-link" href="https://www.scoutshop.org/">Scout Shop</a> or the Scout Achievement Center.</p><small>No purchases needed before your first visit.</small></div>
+          <a class="button" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Join Troop 1135 <svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="join-guide join-faq reveal">
+          <div class="guide-heading"><svg class="icon"><use href="#i-compass"/></svg><span>A FEW GOOD QUESTIONS</span></div>
+          <div id="faq-list" class="faq-list"></div>
+        </div>
+        <div id="events" class="events-panel" hidden></div>
+        <div id="contact" class="join-finish reveal">
+          <h3>Your next step? Come say hello.</h3>
+          <a class="button button-cream" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Visit a Meeting <svg class="icon"><use href="#i-arrow"/></svg></a>
+          <div class="contact-options"><a data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Contact the troop</a><span>·</span><a data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Request information</a></div>
+        </div>
+      </div>
     </section>
   </main>
   <footer class="site-footer">
-    <div class="container footer-main"><a class="brand footer-brand" href="#home"><span class="brand-mark"><svg class="icon"><use href="#i-mountain"/></svg></span><span class="brand-type">TROOP <strong>1135</strong><small>SCOUTS BSA · ADVENTURE TOGETHER.</small></span></a><nav aria-label="Footer navigation"><a href="#about">About</a><a href="#join">Join</a><a href="#eagles">Eagles</a><a href="#adventures">Adventures</a><a href="#parents">Parents</a><a href="#contact">Contact</a></nav><span class="footer-tagline">Good trails. Great company.</span></div>
+    <div class="container footer-main"><a class="brand footer-brand" href="#home"><span class="brand-mark"><svg class="icon"><use href="#i-mountain"/></svg></span><span class="brand-type">TROOP <strong>1135</strong><small>SCOUTS BSA · ADVENTURE TOGETHER.</small></span></a><nav aria-label="Footer navigation"><a href="#adventures">Adventures</a><a href="#about">About</a><a href="#parents">Why Scouting</a><a href="#eagles">Achievement</a><a href="#join">Visit a Meeting</a><a href="#join-troop">How to Join</a><a href="#contact">Contact</a></nav><span class="footer-tagline">Good trails. Great company.</span></div>
     <!-- Troop leaders: charter organization and adult contact label live in data/troop.js. Never add youth contact information. -->
     <div class="container footer-bottom"><span>© <span id="year">2026</span> Scouts BSA Troop 1135</span><span id="charter-info">Charter organization: to be added</span><a id="contact-label" data-join-link href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Contact our adult troop leaders ↗</a></div>
   </footer>
