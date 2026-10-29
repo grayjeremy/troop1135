@@ -1,0 +1,11 @@
+{
+  "name": "troop1135",
+  "private": true,
+  "type": "module",
+  "description": "An adventure-ready static website for Scouts BSA Troop 1135.",
+  "scripts": {
+    "build": "node scripts/build-eagles.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=18" }
+}
