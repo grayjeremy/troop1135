@@ -69,8 +69,13 @@ test("practical FAQs cover eligibility, costs, visits, safety, and uniform essen
 test("new members can download the first-meeting flyer from the join section", async () => {
   const joinSection = html.match(/<section id="join"[\s\S]*?<\/section>/)[0];
   assert.match(joinSection, /href="\.\/documents\/troop-1135-first-meeting-flyer\.pdf" download="Troop-1135-First-Meeting-Flyer\.pdf"/);
-  assert.match(joinSection, /Download Your First Meeting Adventure Guide/);
-  assert.match(joinSection, /you don't need it to visit/);
+  assert.match(joinSection, /<article class="meeting-flyer" aria-labelledby="meeting-guide-title">/);
+  assert.match(joinSection, /<h4 id="meeting-guide-title">Your First Meeting Adventure Guide<\/h4>/);
+  assert.match(joinSection, /Meet the Scouts, discover what makes our troop special, and collect signatures from new friends\./);
+  assert.match(joinSection, /class="button meeting-flyer-download"[^>]+>Download Your Guide/);
+  assert.match(joinSection, /alt="First Meeting Adventure Guide preview[^"]*signatures"/);
+  assert.match(joinSection, /OPTIONAL\. JUST FOR FUN\./);
+  assert.match(joinSection, /Print it and bring it along — or just show up!/);
   assert.ok(joinSection.indexOf('class="meeting-flyer"') < joinSection.indexOf('id="join-troop"'));
   assert.match(joinSection, /Just show up\. We'll take it from there\./);
   assert.match(joinSection, /Complete the Electronic Youth Application/);
