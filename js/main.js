@@ -10,22 +10,35 @@ document.querySelector("#year").textContent = new Date().getFullYear();
 document.querySelectorAll("[data-join-link]").forEach((link) => { link.href = troop.joinUrl; });
 
 const faqList = document.querySelector("#faq-list");
-for (const faq of faqs) {
-  const details = element("details");
-  const answer = element("p", {}, faq.answer);
-  if (faq.link) {
-    answer.append(" ", element("a", { href: faq.link.url, class: "faq-link" }, faq.link.text), ".");
+const faqSplit = Math.ceil(faqs.length / 2);
+for (const columnFaqs of [faqs.slice(0, faqSplit), faqs.slice(faqSplit)]) {
+  const column = element("div", { class: "faq-column" });
+  for (const faq of columnFaqs) {
+    const details = element("details");
+    const answer = element("p", {}, faq.answer);
+    if (faq.link) {
+      answer.append(" ", element("a", { href: faq.link.url, class: "faq-link" }, faq.link.text), ".");
+    }
+    details.append(element("summary", {}, faq.question), answer);
+    column.append(details);
   }
-  details.append(element("summary", {}, faq.question), answer);
-  faqList.append(details);
+  faqList.append(column);
+}
+const faqDesktop = window.matchMedia("(min-width: 651px)");
+function closeOtherFaqs(openItem) {
+  const scope = faqDesktop.matches ? openItem.closest(".faq-column") : faqList;
+  scope.querySelectorAll("details[open]").forEach((item) => {
+    if (item !== openItem) item.open = false;
+  });
 }
 faqList.addEventListener("toggle", (event) => {
-  if (event.target.open) {
-    faqList.querySelectorAll("details").forEach((item) => {
-      if (item !== event.target) item.open = false;
-    });
-  }
+  if (event.target.open) closeOtherFaqs(event.target);
 }, true);
+faqDesktop.addEventListener("change", () => {
+  if (faqDesktop.matches) return;
+  const openItem = faqList.querySelector("details[open]");
+  if (openItem) closeOtherFaqs(openItem);
+});
 
 const eventPanel = document.querySelector("#events");
 if (events.length) {
