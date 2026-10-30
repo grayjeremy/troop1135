@@ -1,13 +1,15 @@
-import { eagles } from "../data/eagles.js?v=20261030-honor";
-import { validateEagles, renderArchive, renderProfile, profileDescription } from "./eagle-content.js?v=20261030-honor";
-import { element, setupNavigation, setupMotion } from "./shared.js?v=20261030-honor";
+import { eagles } from "../data/eagles.js?v=20261030-patches";
+import { validateEagles, renderArchive, renderProfile, renderEagleTrail, profileDescription } from "./eagle-content.js?v=20261030-patches";
+import { element, setupNavigation, setupMotion } from "./shared.js?v=20261030-patches";
 
 const root = document.body.dataset.siteRoot;
 const content = document.querySelector("#profile-content");
 const id = document.body.dataset.scoutId || new URLSearchParams(location.search).get("scout");
 validateEagles(eagles);
 
-if (!id) {
+if (document.body.hasAttribute("data-eagle-trail")) {
+  content.innerHTML = renderEagleTrail(root);
+} else if (!id) {
   content.innerHTML = renderArchive(eagles, root);
 } else {
   const scout = eagles.find((profile) => profile.id === id);

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateEagles, sortEagles, renderArchive, renderEagleCard, renderProfile, profileDescription } from "../js/eagle-content.js";
+import { validateEagles, sortEagles, renderArchive, renderEagleCard, renderEagleInvitation, renderEagleTrail, renderProfile, profileDescription } from "../js/eagle-content.js";
 
 // Rendering fixtures only. These records are never added to public data or generated public pages.
 const minimal = { id: "render-fixture", name: "Rendering fixture", eagleDate: "2025-06-15" };
@@ -118,6 +118,40 @@ test("empty archives show an intentional invitation instead of fictional cards",
   assert.match(archive, /approved portraits and stories/);
   assert.match(archive, /class="honor-empty"/);
   assert.doesNotMatch(archive, /class="honor-card reveal"|preview-trail|Rendering fixture/);
+});
+
+test("the invitation leads the collection and links to a guide rather than a fictional achievement", () => {
+  const invitation = renderEagleInvitation();
+  assert.match(invitation, /<h2>Your picture here<\/h2>/);
+  assert.match(invitation, /href="\.\.\/trail-to-eagle\/"/);
+  assert.doesNotMatch(invitation, /EAGLE SCOUT|honor-card-year|data-scout-id|2026/);
+  const archive = renderArchive([minimal]);
+  assert.ok(archive.indexOf("honor-invitation reveal") < archive.indexOf("Rendering fixture"));
+  assert.equal((archive.match(/honor-invitation reveal/g) || []).length, 1);
+  assert.match(renderEagleInvitation("../../"), /href="\.\.\/\.\.\/trail-to-eagle\/"/);
+});
+
+test("the trail explains seven ranks in order and points to official guidance and the troop listing", () => {
+  const trail = renderEagleTrail();
+  assert.deepEqual([...trail.matchAll(/<h2>([^<]+)<\/h2>/g)].map((match) => match[1]), [
+    "Scout", "Tenderfoot", "Second Class", "First Class", "Star", "Life", "Eagle",
+  ]);
+  assert.equal((trail.match(/class="eagle-trail-marker"/g) || []).length, 7);
+  assert.deepEqual([...trail.matchAll(/class="eagle-trail-patch" src="([^"]+)" alt="([^"]+)"/g)].map((match) => [match[1], match[2]]), [
+    ["../images/ranks/scout.webp", "Scout rank patch"],
+    ["../images/ranks/tenderfoot.webp", "Tenderfoot rank patch"],
+    ["../images/ranks/second-class.webp", "Second Class rank patch"],
+    ["../images/ranks/first-class.webp", "First Class rank patch"],
+    ["../images/ranks/star.webp", "Star rank patch"],
+    ["../images/ranks/life.webp", "Life rank patch"],
+    ["../images/ranks/eagle.webp", "Eagle rank patch"],
+  ]);
+  assert.match(renderEagleTrail("../../"), /src="\.\.\/\.\.\/images\/ranks\/scout.webp"/);
+  assert.match(trail, /not a complete requirements checklist/);
+  assert.match(trail, /https:\/\/www.scouting.org\/programs\/scouts-bsa\/advancement-and-awards\//);
+  assert.match(trail, /https:\/\/beascout.scouting.org\/units\/1f19a1ed-19cf-4598-9931-b2c8abd58762/);
+  assert.match(trail, /href="\.\.\/eagles\/"/);
+  assert.match(renderEagleTrail("../../"), /href="\.\.\/\.\.\/eagles\/"/);
 });
 
 test("public names, stories, awards, captions, and metadata escape markup", () => {

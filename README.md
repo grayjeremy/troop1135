@@ -24,7 +24,7 @@ All navigation, imports, and local assets use relative paths, so the site works 
 
 ### Browser caching after deployments
 
-Stylesheets, JavaScript entry points, and their imported modules/data use a matching release suffix within each experience: `?v=20261029-recruitment` for the homepage and `?v=20261030-honor` for the Eagle archive. This avoids mixing new markup with an older cached script.
+Stylesheets, JavaScript entry points, and their imported modules/data use a matching release suffix within each experience: `?v=20261029-recruitment` for the homepage and `?v=20261030-patches` for the Eagle archive and Trail to Eagle guide. This avoids mixing new markup with an older cached script.
 
 When deploying changes, bump the relevant release value in that page's stylesheet/module URLs, the entry module's imports, and the assertions in `tests/site.test.js`. Shared-script changes should bump both experiences. Re-run `npm run build` to update the archive and generated Eagle pages, then deploy the files together. Query strings are supported by GitHub Pages and do not change the PDF URL. A visitor who already has an old page open can refresh; **Ctrl+Shift+R** bypasses the browser cache.
 
@@ -61,21 +61,31 @@ The archive at `eagles/` celebrates each Scout's whole journey. Portrait-first t
 
 The troop's transition from 1452 to 1135 is acknowledged without inventing dates or other history. Both troop numbers belong in the same collection. The homepage and its archive link are unchanged.
 
-**No approved records have been supplied yet.** `eagles` is intentionally empty; the archive shows a designed invitation rather than fictional Scouts or borrowed youth portraits. Development fixtures live only in `tests/eagles.test.js` and are never imported by the public website.
+The collection starts with a **Your picture here** invitation card linking to `trail-to-eagle/`, followed by the Eagle Scouts in newest-first order. It is not a Scout record and has no Eagle year or earned-rank label. The linked page presents the seven ranks as trail checkpoints, with an invitation to visit and a link to official advancement guidance. It is an introductory overview, not a replacement for current official requirements. Edit its wording in `renderEagleTrail` and the invitation in `renderEagleInvitation` in `js/eagle-content.js`, then rebuild; do not add a fictional entry to `data/eagles.js`. The guide is generated as real HTML and works without JavaScript.
+
+Each checkpoint includes its rank patch, stored locally in `images/ranks/` so the guide does not depend on an external image host. The Scout through Life images come from the matching PNG assets under `https://www.lucyeagle.com/assets/ranks/`; the Eagle image comes from that directory's `eagle.webp`. These Scouting insignia are separate from the site's original generic outdoor icons. Web copies preserve transparency and proportions, have a maximum dimension of 256px, and contain no source metadata. Replace a patch using its existing lowercase hyphenated filename, then rebuild and check desktop/mobile previews.
+
+The archive contains the 11 Scouts and Eagle dates supplied by the site owner. **Use first names and last initials only** in names, URLs, filenames, alt text, and metadata; do not enter middle names or full surnames. Check photographs for readable full names on signs and uniform tags too. All supplied dates are preserved, including Lily G.'s November 15, 2026 date: the site owner confirmed the website will launch later. Recheck future-dated entries before publishing. Profiles without supplied photographs or stories use the existing portrait placeholder and omit unknown details.
+
+**Lucy G.**, at `eagles/lucy-g/`, has the first expanded profile. Her additional facts and photographs come from [Lucy's Eagle Scout website](https://www.lucyeagle.com/), reviewed October 30, 2026, with reuse permission confirmed by the site owner. The 51-merit-badge total comes from the site's badge data; its Palm count and years in Scouting come from the site's displayed counter targets. The statistics' verification dates are not award dates. Future goals are not presented as earned awards, and unknown leadership titles, favorite experiences, and joining dates are omitted.
+
+Lucy's approved photo copies are stored in `images/eagles/lucy-g/`, optimized to a maximum dimension of 1400px and under 350KB each, with source metadata removed. The source website and its originals are unchanged; the troop profile does not depend on that website at runtime.
+
+When no approved records remain, the archive shows a designed invitation rather than fictional Scouts or borrowed youth portraits. Development fixtures live only in `tests/eagles.test.js` and are never imported by the public website.
 
 ### Add a Scout
 
-1. Obtain the appropriate permission for the public name, portrait, biography, awards, quotations, and every gallery photograph, including permission covering other identifiable people. Verify dates and accomplishments. Never publish private contact details, birthdays, or private itineraries.
-2. Choose a permanent lowercase hyphenated `id`, and create `images/eagles/SCOUT-SLUG/` for approved, optimized photographs. Remove GPS/EXIF metadata before upload.
+1. Obtain the appropriate permission for the first name and last initial, portrait, biography, awards, quotations, and every gallery photograph, including permission covering other identifiable people. Verify dates and accomplishments. Never publish full surnames, middle names, private contact details, birthdays, or private itineraries.
+2. Choose a permanent lowercase hyphenated `id` using the first name and last initial (for example, `first-x`), and create `images/eagles/SCOUT-SLUG/` for approved, optimized photographs. Remove GPS/EXIF metadata before upload.
 3. Add one object to `eagles` in `data/eagles.js`. Only `id`, `name`, and `eagleDate` are required. Replace these placeholders with verified information:
 
    ```js
    export const eagles = [
      {
-       id: "approved-public-slug",
-       name: "Approved public name",
+       id: "first-x",
+       name: "First X.",
        eagleDate: "YYYY-MM-DD",
-       portrait: "images/eagles/approved-public-slug/portrait.webp",
+       portrait: "images/eagles/first-x/portrait.webp",
        portraitAlt: "Describe the approved portrait.",
        troopNumber: "1452", // Or "1135", when verified.
        scoutBio: "The Scout's approved personal introduction.",
@@ -143,7 +153,7 @@ All image paths are site-root-relative in data, without a leading slash. Portrai
 
 ### Permanent pages and maintenance
 
-`npm run build` uses the same renderer as the browser to write the archive and each `/eagles/SCOUT-SLUG/` profile as real HTML. Direct visits, refreshes, and JavaScript-disabled browsers can read generated pages on GitHub Pages under `/troop1135/`. Titles, descriptions, social images, and canonical URLs are profile-specific. If hosting changes, update the archive's canonical URL in `eagles/index.html` before building.
+`npm run build` uses the same renderer as the browser to write the archive, each `/eagles/SCOUT-SLUG/` profile, and `/trail-to-eagle/` as real HTML. Direct visits, refreshes, and JavaScript-disabled browsers can read generated pages on GitHub Pages under `/troop1135/`. Titles, descriptions, social images, and canonical URLs are profile-specific. If hosting changes, update the archive's canonical URL in `eagles/index.html` before building.
 
 Rebuild after every data edit. Do not hand-edit content between `EAGLE_CONTENT_START` / `EAGLE_CONTENT_END` in generated HTML; edit records or the reusable renderer in `js/eagle-content.js`. The archive also supports old `eagles/?scout=ID` links with JavaScript and points their canonical URL at the permanent profile.
 
@@ -211,8 +221,9 @@ js/eagle-content.js       Shared validation, sorting, and static/browser renderi
 data/                     Troop information, albums, Eagle records
 eagles/index.html         Archive and query-based profile entry
 eagles/SCOUT-SLUG/         Generated permanent real profiles
+trail-to-eagle/index.html  Generated seven-rank guide linked from the invitation card
 images/                   Local photographs and favicon
-scripts/build-eagles.js   Optional static profile generator
+scripts/build-eagles.js   Static archive, profile, and trail guide generator
 tests/                    Dependency-free checks
 .nojekyll                 Plain GitHub Pages hosting
 ```

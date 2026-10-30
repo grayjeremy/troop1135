@@ -106,10 +106,22 @@ export function renderEagleCard(scout, root = "../") {
   </a>`;
 }
 
+export function renderEagleInvitation(root = "../") {
+  return `<a class="honor-card honor-invitation reveal" href="${root}trail-to-eagle/" aria-label="Your picture here: explore the trail to Eagle">
+    <div class="honor-card-photo"><div class="honor-invitation-photo">
+      <span class="honor-invitation-frame" aria-hidden="true">${emblem("mountain")}</span>
+      <p>Your next adventure<br>could lead here.</p>
+    </div></div>
+    <div class="honor-card-copy"><p class="honor-kicker">YOUR NEXT CHAPTER</p><h2>Your picture here</h2>
+      <div class="honor-card-footer"><span>Explore the trail to Eagle</span>${emblem("arrow")}</div>
+    </div>
+  </a>`;
+}
+
 export function renderArchive(records, root = "../") {
   const collection = records.length
     ? `<div class="honor-collection-heading"><p class="eyebrow">THE HALL OF HONOR</p><p>Newest Eagle achievements first</p></div>
-       <div class="honor-grid">${sortEagles(records).map((scout) => renderEagleCard(scout, root)).join("")}</div>`
+       <div class="honor-grid">${renderEagleInvitation(root)}${sortEagles(records).map((scout) => renderEagleCard(scout, root)).join("")}</div>`
     : `<section class="honor-empty" aria-labelledby="honor-empty-title">
         <div class="honor-seal" aria-hidden="true">${emblem()}</div>
         <div><p class="eyebrow">A LEGACY WORTH KEEPING</p><h2 id="honor-empty-title">Every journey deserves to be remembered.</h2>
@@ -122,6 +134,43 @@ export function renderArchive(records, root = "../") {
     </header>${collection}
     <aside class="honor-history"><span class="honor-history-mark" aria-hidden="true">1452 <span>→</span> 1135</span>
     <div><h2>One troop story. Two troop numbers.</h2><p>Our troop is transitioning from Troop 1452 to Troop 1135. This collection honors Eagle Scouts from both chapters.</p></div></aside>`;
+}
+
+export function renderEagleTrail(root = "../") {
+  // This is an introduction, not a substitute for current official advancement requirements.
+  const ranks = [
+    ["Scout", "Start here", "Learn the Scout Oath and Law, meet your patrol, and practice the basics that set you up for adventures ahead."],
+    ["Tenderfoot", "Build confidence", "Get hands-on with camping, first aid, teamwork, and personal fitness. Small challenges build confidence."],
+    ["Second Class", "Find your footing", "Practice navigation, outdoor cooking, water safety, and service as you become more capable on the trail."],
+    ["First Class", "Be ready for adventure", "Bring your outdoor skills together and grow into a Scout your patrol can count on."],
+    ["Star", "Step into leadership", "Explore interests through merit badges, serve your community, and take on a position of responsibility."],
+    ["Life", "Lead with purpose", "Keep building your leadership and merit badge skills while preparing for the final steps toward Eagle."],
+    ["Eagle", "Make your mark", "Plan and lead an approved service project, complete the remaining rank requirements, and share your journey at an Eagle board of review."],
+  ];
+  return `<a class="text-link honor-profile-back" href="${root}eagles/">← All Eagle Scouts</a>
+    <header class="honor-intro"><p class="eyebrow">YOUR NEXT CHAPTER</p>
+      <h1 class="honor-title">Your trail to Eagle</h1>
+      <p class="honor-tagline">Seven ranks. A lifetime of possibility.</p>
+      <p class="honor-introduction">Your story starts with a first meeting. Learn outdoor skills, make friends, take on responsibility, and discover the leader you can become. One adventure at a time, your own trail begins to take shape.</p>
+    </header>
+    <ol class="eagle-trail" role="list" aria-label="The seven ranks on the trail to Eagle">
+      ${ranks.map(([rank, theme, description], index) => `<li>
+        <span class="eagle-trail-marker" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+        <div class="eagle-trail-step">
+          <img class="eagle-trail-patch" src="${root}images/ranks/${rank.toLowerCase().replaceAll(" ", "-")}.webp" alt="${rank} rank patch" width="112" height="112" loading="lazy">
+          <p class="eyebrow">${theme}</p><h2>${rank}</h2><p>${description}</p>
+        </div>
+      </li>`).join("")}
+    </ol>
+    <section class="honor-stats-panel eagle-trail-invitation" aria-labelledby="trail-join-title">
+      <p class="eyebrow">IT STARTS WITH YOU</p><h2 id="trail-join-title">No one hikes this trail alone.</h2>
+      <p>Your patrol, youth leaders, adult leaders, and merit badge counselors help you along the way. Advancement is not a race: learn by doing, enjoy the adventures, and build your skills one step at a time.</p>
+      <div class="button-row">
+        <a class="button button-cream" href="https://beascout.scouting.org/units/1f19a1ed-19cf-4598-9931-b2c8abd58762">Visit a Meeting ${emblem("arrow")}</a>
+        <a class="button button-outline-light" href="https://www.scouting.org/programs/scouts-bsa/advancement-and-awards/">Official advancement guidance ${emblem("arrow")}</a>
+      </div>
+      <p class="eagle-trail-guidance">This trail is an overview, not a complete requirements checklist. Follow the current official requirements and work with troop leaders as you plan your next steps.</p>
+    </section>`;
 }
 
 function renderStats(scout) {

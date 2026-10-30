@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile, access, mkdtemp, mkdir, copyFile, writeFile, rm } from "node:fs/promises";
+import { readFile, access, readdir, mkdtemp, mkdir, copyFile, writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { promisify } from "node:util";
@@ -9,7 +9,7 @@ import { createHash } from "node:crypto";
 import { troop, faqs, events } from "../data/troop.js";
 import { albums } from "../data/albums.js";
 import { eagles } from "../data/eagles.js";
-import { validateEagles, getEagleImages } from "../js/eagle-content.js";
+import { validateEagles, getEagleImages, renderArchive, renderProfile, renderEagleTrail, escapeHtml } from "../js/eagle-content.js";
 
 const run = promisify(execFile);
 const root = new URL("../", import.meta.url);
@@ -38,7 +38,7 @@ test("all primary sections, accessible landmarks, and official contact links exi
 });
 
 test("static local paths resolve and never assume a domain-root deployment", async () => {
-  for (const page of ["index.html", "eagles/index.html"]) {
+  for (const page of ["index.html", "eagles/index.html", "trail-to-eagle/index.html"]) {
     const source = await readFile(new URL(page, root), "utf8");
     const pageUrl = new URL(page, root);
     for (const [, path] of source.matchAll(/(?:src|href)="([^"#]+)"/g)) {
@@ -60,7 +60,8 @@ test("six sections follow the experience-to-membership recruitment journey", () 
 test("page assets and module dependencies use their page's release version to avoid stale deployments", async () => {
   for (const [page, entry, release, count] of [
     ["index.html", "js/main.js", "20261029-recruitment", 2],
-    ["eagles/index.html", "js/eagle.js", "20261030-honor", 3],
+    ["eagles/index.html", "js/eagle.js", "20261030-patches", 3],
+    ["trail-to-eagle/index.html", "js/eagle.js", "20261030-patches", 3],
   ]) {
     const source = await readFile(new URL(page, root), "utf8");
     const assets = [...source.matchAll(/(?:src|href)="([^"]+\.(?:js|css)\?[^"]+)"/g)];
@@ -152,8 +153,52 @@ test("public Eagle records validate and reference existing images and permanent 
   assert.doesNotMatch(source, /export const sampleEagles/);
 });
 
-test("public troop photos are optimized and do not contain source metadata", async () => {
-  const paths = new Set(albums.flatMap((album) => [album.image, ...album.photos.map((photo) => photo.src)]));
+test("public Eagle names use only first names and last initials without obsolete profile pages", async () => {
+  for (const scout of eagles) {
+    assert.match(scout.name, /^[\p{L}\p{M}'-]+ \p{L}\.$/u, "Use only the first name and last initial");
+    const [first, initial] = scout.name.split(" ");
+    assert.equal(scout.id, `${first.toLowerCase()}-${initial[0].toLowerCase()}`, "Keep full surnames out of profile URLs");
+  }
+  for (const entry of await readdir(new URL("eagles/", root), { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      assert.ok(eagles.some((scout) => scout.id === entry.name), `Remove obsolete public profile: ${entry.name}`);
+    }
+  }
+});
+
+test("built Eagle archive and profiles contain the current approved records", async () => {
+  const archive = await readFile(new URL("eagles/index.html", root), "utf8");
+  assert.ok(archive.includes(renderArchive(eagles)), "Rebuild the archive after editing Eagle data");
+  for (const scout of eagles) {
+    const profile = await readFile(new URL(`eagles/${scout.id}/index.html`, root), "utf8");
+    assert.ok(profile.includes(renderProfile(scout)), `Rebuild the profile for ${scout.id}`);
+    assert.ok(profile.includes(`<title>${escapeHtml(scout.name)} | Eagle Scout | Troop 1135</title>`));
+    assert.ok(profile.includes(`rel="canonical" href="https://grayjeremy.github.io/troop1135/eagles/${scout.id}/"`));
+    for (const [, path] of profile.matchAll(/(?:src|href)="([^"#]+)"/g)) {
+      if (/^(?:https?:|data:)/.test(path)) continue;
+      assert.ok(!path.startsWith("/"), `Root-relative profile path: ${path}`);
+      await access(new URL(path.split("#")[0], new URL(`eagles/${scout.id}/index.html`, root)));
+    }
+  }
+});
+
+test("the Trail to Eagle is a generated static guide, not a Scout profile", async () => {
+  const guide = await readFile(new URL("trail-to-eagle/index.html", root), "utf8");
+  assert.ok(guide.includes(renderEagleTrail()));
+  assert.match(guide, /<body data-site-root="\.\.\/" data-eagle-trail="true">/);
+  assert.match(guide, /<title>Your Trail to Eagle \| Troop 1135<\/title>/);
+  assert.match(guide, /og:type" content="website"/);
+  assert.match(guide, /rel="canonical" href="https:\/\/grayjeremy.github.io\/troop1135\/trail-to-eagle\/"/);
+  assert.doesNotMatch(guide, /data-scout-id|honor-rank-date/);
+  assert.ok(eagles.every((scout) => scout.id !== "trail-to-eagle"));
+});
+
+test("public photographs and rank patches are optimized and do not contain source metadata", async () => {
+  const paths = new Set([
+    ...albums.flatMap((album) => [album.image, ...album.photos.map((photo) => photo.src)]),
+    ...eagles.flatMap((scout) => getEagleImages(scout).map((photo) => photo.src)),
+    ...[...renderEagleTrail().matchAll(/src="\.\.\/([^"]+)"/g)].map((match) => match[1]),
+  ]);
   for (const path of paths) {
     if (!path.endsWith(".webp")) continue;
     const bytes = await readFile(new URL(path, root));
@@ -193,9 +238,9 @@ test("permanent profile generator writes nested project-safe pages and rejects u
     await run(process.execPath, [join(directory, "scripts", "build-eagles.js")]);
     const output = await readFile(join(directory, "eagles", "test-eagle", "index.html"), "utf8");
     assert.match(output, /data-site-root="\.\.\/\.\.\/" data-scout-id="test-eagle"/);
-    assert.match(output, /src="\.\.\/\.\.\/js\/eagle.js\?v=20261030-honor"/);
+    assert.match(output, /src="\.\.\/\.\.\/js\/eagle.js\?v=20261030-patches"/);
     assert.match(output, /Test &amp; &quot;Scout&quot; \$&amp;/);
-    assert.match(output, /href="\.\.\/\.\.\/css\/eagles.css\?v=20261030-honor"/);
+    assert.match(output, /href="\.\.\/\.\.\/css\/eagles.css\?v=20261030-patches"/);
     assert.match(output, /og:image" content="https:\/\/grayjeremy.github.io\/troop1135\/images\/hero-mountains.jpg"/);
     assert.match(output, /rel="canonical" href="https:\/\/grayjeremy.github.io\/troop1135\/eagles\/test-eagle\/"/);
     assert.match(output, /An approved biography &amp; &quot;quote&quot; \$&amp;\./);
@@ -204,6 +249,12 @@ test("permanent profile generator writes nested project-safe pages and rejects u
     const archive = await readFile(join(directory, "eagles", "index.html"), "utf8");
     assert.match(archive, /href="\.\.\/eagles\/test-eagle\/"/);
     assert.match(archive, /class="honor-card reveal"/);
+    assert.match(archive, /href="\.\.\/trail-to-eagle\/"/);
+    const trail = await readFile(join(directory, "trail-to-eagle", "index.html"), "utf8");
+    assert.ok(trail.includes(renderEagleTrail()));
+    assert.match(trail, /data-eagle-trail="true"/);
+    assert.match(trail, /rel="canonical" href="https:\/\/grayjeremy.github.io\/troop1135\/trail-to-eagle\/"/);
+    assert.doesNotMatch(trail, /data-scout-id/);
     await writeFile(join(directory, "data", "eagles.js"), 'export const eagles = [{id: "../escape"}];');
     await assert.rejects(run(process.execPath, [join(directory, "scripts", "build-eagles.js")]), /Invalid or duplicate Eagle ID/);
     await writeFile(join(directory, "data", "eagles.js"), `export const eagles = ${JSON.stringify([{ ...sample, portrait: "images/missing.webp" }])};`);

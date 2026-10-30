@@ -45,6 +45,11 @@
 .honor-portrait-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; background: var(--forest) var(--topo); color: #e2dfc0; }
 .honor-portrait-placeholder > .icon { width: 80px; height: 80px; }
 .honor-portrait-placeholder > span { font-size: 9px; letter-spacing: 2px; text-align: center; padding-inline: 15px; }
+.honor-invitation { border-style: dashed; }
+.honor-invitation-photo { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 24px; background: #e9eddf var(--topo); color: var(--forest); text-align: center; }
+.honor-invitation-frame { display: grid; place-items: center; width: 48%; aspect-ratio: 4 / 5; border: 1px dashed var(--plum); border-radius: 4px; color: var(--plum); }
+.honor-invitation-frame .icon { width: 65%; height: auto; aspect-ratio: 1; }
+.honor-invitation-photo p { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.6; }
 .honor-empty { display: flex; align-items: center; gap: 40px; padding: 44px; background: #e9eddf; border: 1px solid #d6dccb; border-radius: 5px; }
 .honor-seal { display: grid; place-items: center; width: 100px; height: 122px; flex-shrink: 0; color: var(--plum); border: 1px solid #76516a70; border-radius: 5px 5px 40px 40px; }
 .honor-seal .icon { width: 44px; height: 44px; }
@@ -101,9 +106,25 @@
 .honor-beneficiary { font-weight: 600; }
 .honor-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .honor-gallery figure { margin: 0; min-width: 0; }
-.honor-gallery img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+.honor-gallery img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: top; border-radius: 3px; }
 .honor-gallery figcaption { font-size: 11px; color: var(--muted); padding-top: 10px; }
 .honor-stats-panel :focus-visible { outline-color: var(--cream); }
+.eagle-trail { max-width: 900px; list-style: none; padding: 0; margin: 0 auto; }
+.eagle-trail > li { position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 28px; padding-bottom: 24px; }
+.eagle-trail > li:not(:last-child)::before { content: ""; position: absolute; left: 23px; top: 48px; bottom: 0; border-left: 2px dashed var(--sage); }
+.eagle-trail > li:last-child { padding-bottom: 0; }
+.eagle-trail-marker { position: relative; display: grid; place-items: center; width: 48px; height: 48px; background: var(--cream); color: var(--plum); border: 1px solid var(--plum); border-radius: 50%; font: 750 14px var(--heading); }
+.eagle-trail-step { display: grid; grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "patch theme" "patch title" "patch description"; column-gap: 24px; padding: 26px 30px; border: 1px solid var(--line); border-radius: 5px; background: var(--paper); }
+.eagle-trail-patch { grid-area: patch; align-self: center; justify-self: center; width: 112px; height: 112px; object-fit: contain; }
+.eagle-trail-step .eyebrow { grid-area: theme; color: var(--plum); margin-bottom: 10px; }
+.eagle-trail-step h2 { grid-area: title; font-size: 27px; letter-spacing: -.7px; margin-bottom: 12px; }
+.eagle-trail-step > p:last-child { grid-area: description; margin-bottom: 0; font-size: 15px; color: var(--muted); }
+.eagle-trail > li:last-child .eagle-trail-marker { background: var(--plum); color: var(--cream); }
+.eagle-trail > li:last-child .eagle-trail-step { background: var(--forest) var(--topo); border-color: var(--forest); color: var(--cream); }
+.eagle-trail > li:last-child .eagle-trail-step p { color: #d4dfc5; }
+.eagle-trail-invitation > p { max-width: 780px; }
+.eagle-trail-invitation .button-row { margin-top: 24px; }
+.eagle-trail-invitation .eagle-trail-guidance { margin: 24px 0 0; color: #d4dfc5; font-size: 12px; }
 
 @media (max-width: 1000px) {
   .honor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -138,4 +159,12 @@
   .honor-project { flex-direction: column; align-items: start; }
   .honor-project h2 { font-size: 23px; }
   .honor-project-photo { width: 100%; max-width: 300px; height: auto; aspect-ratio: 4 / 3; }
+  .eagle-trail > li { grid-template-columns: 36px minmax(0, 1fr); gap: 14px; padding-bottom: 18px; }
+  .eagle-trail > li:not(:last-child)::before { left: 17px; top: 36px; }
+  .eagle-trail-marker { width: 36px; height: 36px; font-size: 12px; }
+  .eagle-trail-step { grid-template-columns: 72px minmax(0, 1fr); grid-template-areas: "theme theme" "patch title" "description description"; column-gap: 12px; padding: 20px; }
+  .eagle-trail-patch { width: 72px; height: 72px; margin-bottom: 12px; }
+  .eagle-trail-step h2 { font-size: 24px; }
+  .eagle-trail-step > p:last-child { font-size: 14px; }
+  .eagle-trail-invitation .button { width: 100%; }
 }
