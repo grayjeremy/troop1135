@@ -4,9 +4,6 @@ import { element, setupNavigation, setupMotion } from "./shared.js?v=20261029-re
 
 document.querySelector("#troop-story").textContent = troop.story;
 document.querySelector("#meeting-details").textContent = troop.meetingDetails;
-document.querySelector("#charter-info").textContent = troop.charterOrganization;
-document.querySelector("#contact-label").textContent = troop.contactLabel;
-document.querySelector("#year").textContent = new Date().getFullYear();
 document.querySelectorAll("[data-join-link]").forEach((link) => { link.href = troop.joinUrl; });
 
 const faqList = document.querySelector("#faq-list");
