@@ -61,6 +61,8 @@ test("card fronts contain only portrait, identity, designation, year, and troop 
   assert.match(card, /EAGLE SCOUT/);
   assert.match(card, /2025/);
   assert.match(card, /Troop 1452/);
+  assert.match(card, /class="honor-eagle-badge" src="\.\.\/images\/ranks\/eagle\.webp" alt=""/);
+  assert.doesNotMatch(card, /#i-star/);
   assert.doesNotMatch(card, /PROJECT|biography fixture|Merit badges|37|One Bronze Palm|Volunteer hours|Benefiting/);
 });
 
@@ -81,6 +83,8 @@ test("full profiles celebrate the Scout before a smaller service project and var
   assert.ok(profile.indexOf("Awards &amp; Recognition") < profile.indexOf("Eagle Scout Service Project"));
   assert.doesNotMatch(profile, /Volunteer hours|Fundraising|Project volunteers|Project impact/);
   assert.equal(profileDescription(full), full.scoutBio);
+  assert.match(profile, /class="honor-eagle-badge" src="\.\.\/\.\.\/images\/ranks\/eagle\.webp" alt=""/);
+  assert.doesNotMatch(profile, /#i-star/);
 });
 
 test("optional sections render independently and explicitly verified zero counts are supported", () => {
@@ -109,7 +113,9 @@ test("the archive handles fifteen records, sorts full dates newest first, and pr
   assert.equal(JSON.stringify(records), original);
   assert.match(archive, /Our Eagle Scouts/);
   assert.match(archive, /Leadership\. Adventure\. Achievement\./);
-  assert.match(archive, /Troop 1452 to Troop 1135/);
+  assert.match(archive, /transitioned from Troop 1452 to Troop 1135/);
+  assert.match(archive, /The number changed, but we are the same troop\./);
+  assert.doesNotMatch(archive, /is transitioning/);
   assert.doesNotMatch(archive, /honor-empty/);
 });
 

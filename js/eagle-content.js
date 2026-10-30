@@ -84,7 +84,8 @@ export function profileDescription(scout) {
   return hasText(scout.scoutBio) ? scout.scoutBio : `Celebrate ${scout.name}'s Scouting journey, leadership, adventures, and Eagle Scout achievement in our troop's Hall of Honor.`;
 }
 
-const emblem = (id = "star") => `<svg class="icon" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const emblem = (id) => `<svg class="icon" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const eagleBadge = (root) => `<img class="honor-eagle-badge" src="${root}images/ranks/eagle.webp" alt="" aria-hidden="true" width="32" height="40">`;
 const dateText = (value) => new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
 const time = (value) => `<time datetime="${value}">${dateText(value)}</time>`;
 const affiliation = (scout) => hasText(scout.troopNumber) ? `Troop ${escapeHtml(scout.troopNumber)}` : "Troop Hall of Honor";
@@ -98,7 +99,7 @@ export function renderEagleCard(scout, root = "../") {
   return `<a class="honor-card reveal" href="${root}eagles/${scout.id}/" aria-label="Explore ${escapeHtml(scout.name)}'s Scouting journey">
     <div class="honor-card-photo">${portrait(scout, root)}
       <span class="honor-card-year">${scout.eagleDate.slice(0, 4)}</span>
-      <span class="honor-card-emblem">${emblem()}</span>
+      <span class="honor-card-emblem">${eagleBadge(root)}</span>
     </div>
     <div class="honor-card-copy"><p class="honor-kicker">EAGLE SCOUT</p><h2>${escapeHtml(scout.name)}</h2>
       <div class="honor-card-footer"><span>${affiliation(scout)}</span>${emblem("arrow")}</div>
@@ -123,7 +124,7 @@ export function renderArchive(records, root = "../") {
     ? `<div class="honor-collection-heading"><p class="eyebrow">THE HALL OF HONOR</p><p>Newest Eagle achievements first</p></div>
        <div class="honor-grid">${renderEagleInvitation(root)}${sortEagles(records).map((scout) => renderEagleCard(scout, root)).join("")}</div>`
     : `<section class="honor-empty" aria-labelledby="honor-empty-title">
-        <div class="honor-seal" aria-hidden="true">${emblem()}</div>
+        <div class="honor-seal" aria-hidden="true">${eagleBadge(root)}</div>
         <div><p class="eyebrow">A LEGACY WORTH KEEPING</p><h2 id="honor-empty-title">Every journey deserves to be remembered.</h2>
         <p>We're gathering approved portraits and stories from our Eagle Scouts. This Hall of Honor will grow as those profiles are ready to share.</p>
         <a class="text-link" href="${root}index.html#contact">Connect with our adult leaders ${emblem("arrow")}</a></div>
@@ -133,7 +134,7 @@ export function renderArchive(records, root = "../") {
     <p class="honor-introduction">Every Eagle Scout has a story. Years of adventures, friendships, challenges, and leadership shape the journey to Scouting's highest rank. Here we celebrate the Scouts who earned their Eagle and the experiences that helped them get there.</p>
     </header>${collection}
     <aside class="honor-history"><span class="honor-history-mark" aria-hidden="true">1452 <span>→</span> 1135</span>
-    <div><h2>One troop story. Two troop numbers.</h2><p>Our troop is transitioning from Troop 1452 to Troop 1135. This collection honors Eagle Scouts from both chapters.</p></div></aside>`;
+    <div><h2>One troop story. Two troop numbers.</h2><p>Our troop transitioned from Troop 1452 to Troop 1135. The number changed, but we are the same troop. This collection honors our Eagle Scouts under both numbers.</p></div></aside>`;
 }
 
 export function renderEagleTrail(root = "../") {
@@ -191,7 +192,7 @@ function renderAwards(scout, root) {
   if (!scout.awards?.length) return "";
   return `<section class="honor-section" aria-labelledby="honor-awards-title"><p class="eyebrow">EARNED ALONG THE WAY</p><h2 id="honor-awards-title">Awards &amp; Recognition</h2>
     <ul class="honor-awards">${scout.awards.map((award) => `<li>
-      <div class="honor-award-mark">${hasText(award.image) ? imageHtml({ src: award.image, alt: award.imageAlt }, root) : emblem()}</div>
+      <div class="honor-award-mark">${hasText(award.image) ? imageHtml({ src: award.image, alt: award.imageAlt }, root) : eagleBadge(root)}</div>
       <div><h3>${escapeHtml(award.name)}</h3>${award.date ? `<p class="honor-date">${time(award.date)}</p>` : ""}${hasText(award.description) ? `<p>${escapeHtml(award.description)}</p>` : ""}</div>
     </li>`).join("")}</ul></section>`;
 }
@@ -228,7 +229,7 @@ export function renderProfile(scout, root = "../../") {
   return `<a class="text-link honor-profile-back" href="${root}eagles/">← All Eagle Scouts</a>
     <header class="honor-profile-header">
     <div class="honor-profile-card"><div class="honor-profile-photo">${portrait(scout, root, false)}</div>
-      <div class="honor-profile-card-label"><span>EAGLE SCOUT · ${scout.eagleDate.slice(0, 4)}</span>${emblem()}</div>
+      <div class="honor-profile-card-label"><span>EAGLE SCOUT · ${scout.eagleDate.slice(0, 4)}</span>${eagleBadge(root)}</div>
     </div>
     <div class="honor-profile-intro"><p class="eyebrow">${affiliation(scout)} · HALL OF HONOR</p><h1 class="honor-title">${escapeHtml(scout.name)}</h1>
     <p class="honor-rank-date">Eagle Scout · ${time(scout.eagleDate)}</p>

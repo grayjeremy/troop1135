@@ -56,7 +56,6 @@ export const eagles = [
     eagleDate: "2026-09-27",
     portrait: "images/eagles/lucy-g/portrait.webp",
     portraitAlt: "Lucy G. outdoors in her Scout uniform and merit badge sash",
-    troopNumber: "1452",
     scoutBio: "Backpacking, summer camp, marine science, and the National Scout Jamboree are all part of Lucy's Scouting story. Along the way, she has explored new skills, taken on leadership challenges, and put service into action.",
     meritBadgeCount: 51,
     meritBadgeCountAsOf: "2026-10-30",

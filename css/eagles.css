@@ -35,8 +35,8 @@
 .honor-card-photo, .honor-profile-photo { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--paper); }
 .honor-portrait { width: 100%; height: 100%; object-fit: cover; }
 .honor-card-year { position: absolute; top: 14px; left: 14px; background: var(--cream); color: var(--forest); font: 750 16px var(--heading); letter-spacing: 1px; padding: 8px 11px; border: 1px solid #183e3226; border-radius: 2px; }
-.honor-card-emblem { position: absolute; bottom: 14px; right: 14px; background: var(--forest); color: var(--cream); padding: 9px; border: 1px solid #f6f3eb90; border-radius: 3px 3px 14px 14px; }
-.honor-card-emblem .icon { width: 21px; height: 21px; display: block; }
+.honor-card-emblem { position: absolute; bottom: 14px; right: 14px; }
+.honor-eagle-badge { display: block; width: 32px; height: 40px; object-fit: contain; }
 .honor-card-copy { display: flex; flex-direction: column; flex: 1; padding: 21px 14px 8px; border-top: 3px solid var(--plum); }
 .honor-kicker { color: var(--plum); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; margin-bottom: 9px; }
 .honor-card h2 { font-size: 25px; line-height: 1.25; letter-spacing: -.7px; min-height: 2.5em; overflow-wrap: anywhere; margin-bottom: 18px; }
@@ -52,7 +52,7 @@
 .honor-invitation-photo p { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.6; }
 .honor-empty { display: flex; align-items: center; gap: 40px; padding: 44px; background: #e9eddf; border: 1px solid #d6dccb; border-radius: 5px; }
 .honor-seal { display: grid; place-items: center; width: 100px; height: 122px; flex-shrink: 0; color: var(--plum); border: 1px solid #76516a70; border-radius: 5px 5px 40px 40px; }
-.honor-seal .icon { width: 44px; height: 44px; }
+.honor-seal .honor-eagle-badge { width: 44px; height: 56px; }
 .honor-empty h2 { font-size: clamp(25px, 3vw, 34px); letter-spacing: -.8px; margin-bottom: 18px; }
 .honor-empty .eyebrow { color: var(--plum); margin-bottom: 14px; }
 .honor-empty p:not(.eyebrow) { color: var(--muted); font-size: 14px; max-width: 680px; }
@@ -65,7 +65,7 @@
 .honor-profile-header { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 72px; align-items: center; }
 .honor-profile-card { padding: 10px; border: 1px solid #acb6a3; border-radius: 5px; max-width: 440px; box-shadow: 0 8px 24px #183e3215; }
 .honor-profile-card-label { display: flex; justify-content: space-between; align-items: center; padding: 16px 10px 6px; border-top: 3px solid var(--plum); color: var(--plum); font-size: 9px; font-weight: 700; letter-spacing: 1.4px; }
-.honor-profile-card-label .icon { width: 20px; height: 20px; }
+.honor-profile-card-label .honor-eagle-badge { width: 28px; height: 35px; }
 .honor-rank-date { font-size: 13px; font-weight: 600; color: var(--plum); }
 .honor-bio { font-size: 17px; color: var(--muted); max-width: 640px; }
 .honor-quote { margin: 28px 0 0; padding-left: 22px; border-left: 2px solid var(--plum); font: italic 23px/1.6 Georgia, serif; color: var(--forest); }
@@ -144,7 +144,7 @@
   .honor-card h2 { min-height: 0; }
   .honor-empty { flex-direction: column; align-items: start; gap: 25px; padding: 25px; }
   .honor-seal { width: 65px; height: 78px; border-radius: 4px 4px 25px 25px; }
-  .honor-seal .icon { width: 30px; height: 30px; }
+  .honor-seal .honor-eagle-badge { width: 30px; height: 38px; }
   .honor-history { flex-direction: column; align-items: start; gap: 18px; margin-top: 35px; }
   .honor-profile-header { grid-template-columns: 1fr; gap: 30px; }
   .honor-profile-card { width: 100%; max-width: 350px; margin-inline: auto; }
