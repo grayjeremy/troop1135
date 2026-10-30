@@ -60,26 +60,3 @@ export function setupMotion() {
   preference.addEventListener("change", reveal);
   return reveal;
 }
-
-export function createEagleCard(scout, prefix = "./") {
-  const url = scout.sample ? `${prefix}eagles/?scout=${encodeURIComponent(scout.id)}` : `${prefix}eagles/${encodeURIComponent(scout.id)}/`;
-  const card = element("a", { class: "eagle-card reveal", href: url });
-  const image = element("div", { class: "eagle-card-image" });
-  image.append(element("img", { src: `${prefix}${scout.photo}`, alt: scout.photoAlt, loading: "lazy", width: "650", height: "700" }));
-  image.append(element("span", { class: "eagle-year" }, `${scout.sample ? "EAGLE ARCHIVE" : "EAGLE SCOUT"} · ${scout.year}`));
-  const rank = element("span", { class: "eagle-rank" });
-  rank.append(icon("star"));
-  image.append(rank);
-  const body = element("div", { class: "eagle-card-body" });
-  body.append(
-    element("span", { class: "card-kicker" }, scout.sample ? "ILLUSTRATIVE PROFILE · NOT A REAL SCOUT" : "SCOUTS BSA · TROOP 1135"),
-    element("h3", {}, scout.name),
-    element("h4", {}, scout.project),
-    element("p", {}, scout.description),
-  );
-  const bottom = element("span", { class: "eagle-card-bottom" });
-  bottom.append(element("span", {}, scout.sample ? "Explore the sample story" : "Discover her project"), icon("arrow"));
-  body.append(bottom);
-  card.append(image, body);
-  return card;
-}

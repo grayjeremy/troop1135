@@ -8,7 +8,8 @@ import { execFile } from "node:child_process";
 import { createHash } from "node:crypto";
 import { troop, faqs, events } from "../data/troop.js";
 import { albums } from "../data/albums.js";
-import { eagles, sampleEagles } from "../data/eagles.js";
+import { eagles } from "../data/eagles.js";
+import { validateEagles, getEagleImages } from "../js/eagle-content.js";
 
 const run = promisify(execFile);
 const root = new URL("../", import.meta.url);
@@ -56,18 +57,18 @@ test("six sections follow the experience-to-membership recruitment journey", () 
   assert.match(html, /href="#adventures">Explore Our Adventures/);
 });
 
-test("page assets and module dependencies use the same release version to avoid stale deployments", async () => {
-  const release = "20261029-recruitment";
-  for (const file of ["index.html", "eagles/index.html"]) {
-    const source = await readFile(new URL(file, root), "utf8");
+test("page assets and module dependencies use their page's release version to avoid stale deployments", async () => {
+  for (const [page, entry, release, count] of [
+    ["index.html", "js/main.js", "20261029-recruitment", 2],
+    ["eagles/index.html", "js/eagle.js", "20261030-honor", 3],
+  ]) {
+    const source = await readFile(new URL(page, root), "utf8");
     const assets = [...source.matchAll(/(?:src|href)="([^"]+\.(?:js|css)\?[^"]+)"/g)];
-    assert.equal(assets.length, 2, `Version both CSS and module entry in ${file}`);
+    assert.equal(assets.length, count, `Version all CSS and module entries in ${page}`);
     for (const [, asset] of assets) assert.equal(new URL(asset, root).searchParams.get("v"), release);
-  }
-  for (const file of ["js/main.js", "js/eagle.js"]) {
-    const source = await readFile(new URL(file, root), "utf8");
-    for (const [, imported] of source.matchAll(/from "([^"]+)"/g)) {
-      assert.equal(new URL(imported, root).searchParams.get("v"), release, `Unversioned dependency in ${file}`);
+    const script = await readFile(new URL(entry, root), "utf8");
+    for (const [, imported] of script.matchAll(/from "([^"]+)"/g)) {
+      assert.equal(new URL(imported, root).searchParams.get("v"), release, `Unversioned dependency in ${entry}`);
     }
   }
 });
@@ -141,23 +142,14 @@ test("photo manifests have real local assets, alt text, unique IDs, and supporte
   assert.ok(hero.length < 900_000, "Hero should stay under 900KB");
 });
 
-test("Eagle data is consent-ready, explicit about samples, and references existing photos", async () => {
-  const ids = new Set();
-  for (const profile of [...eagles, ...sampleEagles]) {
-    assert.match(profile.id, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
-    assert.ok(!ids.has(profile.id));
-    ids.add(profile.id);
-    for (const field of ["name", "photo", "photoAlt", "project", "description", "beneficiary"]) assert.ok(profile[field], `Missing ${field}`);
-    assert.ok(profile.year);
-    assert.ok(Array.isArray(profile.story));
-    await exists(profile.photo);
-    for (const photo of profile.photos || []) {
-      assert.ok(photo.alt);
-      await exists(photo.src);
-    }
-    if (!profile.sample) await exists(`eagles/${profile.id}/index.html`);
+test("public Eagle records validate and reference existing images and permanent pages", async () => {
+  validateEagles(eagles);
+  for (const profile of eagles) {
+    for (const image of getEagleImages(profile)) await exists(image.src);
+    await exists(`eagles/${profile.id}/index.html`);
   }
-  assert.ok(sampleEagles.every((profile) => profile.sample));
+  const source = await readFile(new URL("data/eagles.js", root), "utf8");
+  assert.doesNotMatch(source, /export const sampleEagles/);
 });
 
 test("public troop photos are optimized and do not contain source metadata", async () => {
@@ -175,9 +167,6 @@ test("public troop photos are optimized and do not contain source metadata", asy
       offset += 8 + size + (size % 2);
     }
   }
-  for (const profile of sampleEagles) {
-    assert.ok(!paths.has(profile.photo), "Real troop photographs must not illustrate fictional Eagle profiles");
-  }
 });
 
 test("CSS includes responsive layouts, visible focus, and live reduced-motion support", async () => {
@@ -193,20 +182,34 @@ test("CSS includes responsive layouts, visible focus, and live reduced-motion su
 test("permanent profile generator writes nested project-safe pages and rejects unsafe IDs", async () => {
   const directory = await mkdtemp(join(tmpdir(), "troop1135-generator-"));
   try {
-    for (const folder of ["scripts", "data", "eagles"]) await mkdir(join(directory, folder));
+    for (const folder of ["scripts", "data", "eagles", "js", "images"]) await mkdir(join(directory, folder));
     await writeFile(join(directory, "package.json"), '{"type":"module"}');
     await copyFile(new URL("scripts/build-eagles.js", root), join(directory, "scripts", "build-eagles.js"));
     await copyFile(new URL("eagles/index.html", root), join(directory, "eagles", "index.html"));
-    const sample = { ...sampleEagles[0], id: "test-eagle", name: 'Test & "Scout"', sample: false };
+    await copyFile(new URL("js/eagle-content.js", root), join(directory, "js", "eagle-content.js"));
+    await copyFile(new URL("images/hero-mountains.jpg", root), join(directory, "images", "hero-mountains.jpg"));
+    const sample = { id: "test-eagle", name: 'Test & "Scout" $&', eagleDate: "2025-06-15", portrait: "images/hero-mountains.jpg", portraitAlt: "Stock mountains for a temporary test, not a Scout portrait", scoutBio: 'An approved biography & "quote" $&.' };
     await writeFile(join(directory, "data", "eagles.js"), `export const eagles = ${JSON.stringify([sample])};`);
     await run(process.execPath, [join(directory, "scripts", "build-eagles.js")]);
     const output = await readFile(join(directory, "eagles", "test-eagle", "index.html"), "utf8");
     assert.match(output, /data-site-root="\.\.\/\.\.\/" data-scout-id="test-eagle"/);
-    assert.match(output, /src="\.\.\/\.\.\/js\/eagle.js\?v=20261029-recruitment"/);
-    assert.match(output, /Test &amp; &quot;Scout&quot;/);
-    assert.match(output, /href="\.\.\/\.\.\/css\/styles.css\?v=20261029-recruitment"/);
-    assert.match(output, /og:image" content="\.\.\/\.\.\/images\/albums\/trail-days\/hiking.jpg"/);
+    assert.match(output, /src="\.\.\/\.\.\/js\/eagle.js\?v=20261030-honor"/);
+    assert.match(output, /Test &amp; &quot;Scout&quot; \$&amp;/);
+    assert.match(output, /href="\.\.\/\.\.\/css\/eagles.css\?v=20261030-honor"/);
+    assert.match(output, /og:image" content="https:\/\/grayjeremy.github.io\/troop1135\/images\/hero-mountains.jpg"/);
+    assert.match(output, /rel="canonical" href="https:\/\/grayjeremy.github.io\/troop1135\/eagles\/test-eagle\/"/);
+    assert.match(output, /An approved biography &amp; &quot;quote&quot; \$&amp;\./);
+    assert.match(output, /<time datetime="2025-06-15">June 15, 2025<\/time>/);
+    assert.doesNotMatch(output, /Scouting at a glance|Awards &amp; Recognition|Eagle Scout Service Project/);
+    const archive = await readFile(join(directory, "eagles", "index.html"), "utf8");
+    assert.match(archive, /href="\.\.\/eagles\/test-eagle\/"/);
+    assert.match(archive, /class="honor-card reveal"/);
     await writeFile(join(directory, "data", "eagles.js"), 'export const eagles = [{id: "../escape"}];');
+    await assert.rejects(run(process.execPath, [join(directory, "scripts", "build-eagles.js")]), /Invalid or duplicate Eagle ID/);
+    await writeFile(join(directory, "data", "eagles.js"), `export const eagles = ${JSON.stringify([{ ...sample, portrait: "images/missing.webp" }])};`);
+    await assert.rejects(run(process.execPath, [join(directory, "scripts", "build-eagles.js")]), /Missing local image images\/missing.webp/);
+    assert.equal(await readFile(join(directory, "eagles", "index.html"), "utf8"), archive, "Invalid records must not overwrite the archive");
+    await writeFile(join(directory, "data", "eagles.js"), `export const eagles = ${JSON.stringify([sample, sample])};`);
     await assert.rejects(run(process.execPath, [join(directory, "scripts", "build-eagles.js")]), /Invalid or duplicate Eagle ID/);
   } finally {
     await rm(directory, { recursive: true, force: true });

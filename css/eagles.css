@@ -1,0 +1,141 @@
+.honor-page {
+  min-height: 70vh;
+  padding-block: 65px 80px;
+}
+
+.honor-intro { max-width: 860px; margin-bottom: 48px; }
+.honor-intro .eyebrow { margin-bottom: 18px; }
+.honor-title {
+  font-size: clamp(42px, 5.5vw, 72px);
+  line-height: 1.1;
+  color: var(--forest);
+  letter-spacing: -2px;
+  text-shadow: none;
+  overflow-wrap: anywhere;
+  margin-bottom: 20px;
+}
+.honor-tagline { color: var(--plum); font-size: 15px; font-weight: 650; letter-spacing: .8px; }
+.honor-introduction { max-width: 760px; font-size: 16px; color: var(--muted); line-height: 1.85; margin-bottom: 0; }
+.honor-collection-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); padding-bottom: 15px; margin-bottom: 28px; }
+.honor-collection-heading p { margin: 0; }
+.honor-collection-heading > p:last-child { color: var(--muted); font-size: 11px; }
+.honor-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; grid-auto-rows: 1fr; }
+.honor-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #acb6a3;
+  border-radius: 5px;
+  background: var(--cream);
+  box-shadow: 0 5px 16px #183e3210;
+  transition: transform .2s, box-shadow .2s;
+}
+.honor-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px #183e3220; }
+.honor-card-photo, .honor-profile-photo { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--paper); }
+.honor-portrait { width: 100%; height: 100%; object-fit: cover; }
+.honor-card-year { position: absolute; top: 14px; left: 14px; background: var(--cream); color: var(--forest); font: 750 16px var(--heading); letter-spacing: 1px; padding: 8px 11px; border: 1px solid #183e3226; border-radius: 2px; }
+.honor-card-emblem { position: absolute; bottom: 14px; right: 14px; background: var(--forest); color: var(--cream); padding: 9px; border: 1px solid #f6f3eb90; border-radius: 3px 3px 14px 14px; }
+.honor-card-emblem .icon { width: 21px; height: 21px; display: block; }
+.honor-card-copy { display: flex; flex-direction: column; flex: 1; padding: 21px 14px 8px; border-top: 3px solid var(--plum); }
+.honor-kicker { color: var(--plum); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; margin-bottom: 9px; }
+.honor-card h2 { font-size: 25px; line-height: 1.25; letter-spacing: -.7px; min-height: 2.5em; overflow-wrap: anywhere; margin-bottom: 18px; }
+.honor-card-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 12px; margin-top: auto; border-top: 1px solid var(--line); font-size: 10px; font-weight: 600; }
+.honor-card-footer .icon { width: 18px; height: 18px; }
+.honor-portrait-placeholder { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; background: var(--forest) var(--topo); color: #e2dfc0; }
+.honor-portrait-placeholder > .icon { width: 80px; height: 80px; }
+.honor-portrait-placeholder > span { font-size: 9px; letter-spacing: 2px; text-align: center; padding-inline: 15px; }
+.honor-empty { display: flex; align-items: center; gap: 40px; padding: 44px; background: #e9eddf; border: 1px solid #d6dccb; border-radius: 5px; }
+.honor-seal { display: grid; place-items: center; width: 100px; height: 122px; flex-shrink: 0; color: var(--plum); border: 1px solid #76516a70; border-radius: 5px 5px 40px 40px; }
+.honor-seal .icon { width: 44px; height: 44px; }
+.honor-empty h2 { font-size: clamp(25px, 3vw, 34px); letter-spacing: -.8px; margin-bottom: 18px; }
+.honor-empty .eyebrow { color: var(--plum); margin-bottom: 14px; }
+.honor-empty p:not(.eyebrow) { color: var(--muted); font-size: 14px; max-width: 680px; }
+.honor-history { display: flex; align-items: center; gap: 35px; margin-top: 48px; border-top: 1px solid var(--line); padding-top: 30px; }
+.honor-history-mark { flex-shrink: 0; font: 750 20px var(--heading); letter-spacing: 1px; color: var(--plum); }
+.honor-history-mark > span { margin-inline: 8px; color: var(--sage); }
+.honor-history h2 { font-size: 18px; letter-spacing: -.3px; margin-bottom: 8px; }
+.honor-history p { font-size: 12px; color: var(--muted); margin: 0; }
+.honor-profile-back { margin-bottom: 35px; }
+.honor-profile-header { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 72px; align-items: center; }
+.honor-profile-card { padding: 10px; border: 1px solid #acb6a3; border-radius: 5px; max-width: 440px; box-shadow: 0 8px 24px #183e3215; }
+.honor-profile-card-label { display: flex; justify-content: space-between; align-items: center; padding: 16px 10px 6px; border-top: 3px solid var(--plum); color: var(--plum); font-size: 9px; font-weight: 700; letter-spacing: 1.4px; }
+.honor-profile-card-label .icon { width: 20px; height: 20px; }
+.honor-rank-date { font-size: 13px; font-weight: 600; color: var(--plum); }
+.honor-bio { font-size: 17px; color: var(--muted); max-width: 640px; }
+.honor-quote { margin: 28px 0 0; padding-left: 22px; border-left: 2px solid var(--plum); font: italic 23px/1.6 Georgia, serif; color: var(--forest); }
+.honor-stats-panel { background: var(--forest) var(--topo); color: var(--cream); border-radius: 5px; padding: 32px; margin-top: 48px; }
+.honor-stats-panel .eyebrow { color: #d4dfc5; margin-bottom: 14px; }
+.honor-stats-panel h2 { font-size: 28px; letter-spacing: -.8px; margin-bottom: 28px; }
+.honor-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 24px; margin: 0; }
+.honor-stats > div { border-top: 1px solid #f6f3eb50; padding-top: 18px; }
+.honor-stats dt { font-size: 11px; color: #d4dfc5; }
+.honor-stats dd { font: 700 28px/1.35 var(--heading); margin: 8px 0 0; overflow-wrap: anywhere; }
+.honor-stats dd small { display: block; margin-top: 10px; color: #d4dfc5; font: 10px/1.6 var(--body); }
+.honor-accomplishments { margin-top: 28px; padding-top: 20px; border-top: 1px solid #f6f3eb30; }
+.honor-accomplishments h3 { font-size: 15px; letter-spacing: 0; margin-bottom: 12px; }
+.honor-accomplishments ul { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.honor-accomplishments li { border: 1px solid #f6f3eb50; border-radius: 3px; padding: 6px 12px; font-size: 12px; }
+.honor-section { margin-top: 48px; padding-top: 35px; border-top: 1px solid var(--line); }
+.honor-section .eyebrow { margin-bottom: 14px; }
+.honor-section h2 { font-size: 30px; letter-spacing: -.8px; }
+.honor-awards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; list-style: none; padding: 0; margin: 0; }
+.honor-awards > li { display: flex; gap: 20px; align-items: start; padding: 22px; background: #eee7e9; border: 1px solid #e0d4db; border-radius: 4px; }
+.honor-award-mark { flex-shrink: 0; display: grid; place-items: center; width: 54px; height: 60px; color: var(--plum); }
+.honor-award-mark img { width: 100%; height: 100%; object-fit: contain; }
+.honor-awards h3 { font-size: 17px; letter-spacing: -.3px; margin-bottom: 8px; }
+.honor-awards p { font-size: 12px; color: var(--muted); margin-bottom: 0; }
+.honor-awards .honor-date { font-size: 10px; color: var(--plum); margin-bottom: 8px; }
+.honor-story { max-width: 780px; color: var(--muted); font-size: 15px; }
+.honor-memories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; margin: 30px 0 0; }
+.honor-memories > div { border-left: 2px solid #87988270; padding-left: 18px; }
+.honor-memories dt { font-size: 10px; font-weight: 700; color: var(--plum); letter-spacing: 1px; margin-bottom: 8px; }
+.honor-memories dd { margin: 0; font-size: 14px; color: var(--muted); }
+.honor-project { display: flex; gap: 30px; align-items: center; }
+.honor-project > div { flex: 1; min-width: 0; }
+.honor-project h2 { font-size: 24px; }
+.honor-project h3 { font-size: 19px; }
+.honor-project p:not(.eyebrow) { font-size: 13px; color: var(--muted); }
+.honor-project p:last-child { margin-bottom: 0; }
+.honor-project-photo { width: 200px; height: 160px; border-radius: 3px; }
+.honor-beneficiary { font-weight: 600; }
+.honor-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.honor-gallery figure { margin: 0; min-width: 0; }
+.honor-gallery img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 3px; }
+.honor-gallery figcaption { font-size: 11px; color: var(--muted); padding-top: 10px; }
+.honor-stats-panel :focus-visible { outline-color: var(--cream); }
+
+@media (max-width: 1000px) {
+  .honor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .honor-profile-header { gap: 35px; }
+  .honor-profile-intro .honor-title { font-size: 45px; }
+  .honor-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 650px) {
+  .honor-page { padding-block: 38px 55px; }
+  .honor-title { font-size: 42px; letter-spacing: -1.5px; }
+  .honor-tagline { font-size: 12px; letter-spacing: .3px; }
+  .honor-introduction { font-size: 14px; }
+  .honor-intro { margin-bottom: 32px; }
+  .honor-collection-heading { align-items: start; flex-direction: column; gap: 8px; }
+  .honor-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
+  .honor-card h2 { min-height: 0; }
+  .honor-empty { flex-direction: column; align-items: start; gap: 25px; padding: 25px; }
+  .honor-seal { width: 65px; height: 78px; border-radius: 4px 4px 25px 25px; }
+  .honor-seal .icon { width: 30px; height: 30px; }
+  .honor-history { flex-direction: column; align-items: start; gap: 18px; margin-top: 35px; }
+  .honor-profile-header { grid-template-columns: 1fr; gap: 30px; }
+  .honor-profile-card { width: 100%; max-width: 350px; margin-inline: auto; }
+  .honor-profile-intro .honor-title { font-size: 42px; }
+  .honor-bio { font-size: 15px; }
+  .honor-quote { font-size: 21px; }
+  .honor-stats-panel { padding: 24px; margin-top: 35px; }
+  .honor-section { margin-top: 35px; padding-top: 28px; }
+  .honor-section h2 { font-size: 27px; }
+  .honor-awards, .honor-memories, .honor-gallery { grid-template-columns: 1fr; }
+  .honor-awards > li { padding: 18px; gap: 14px; }
+  .honor-project { flex-direction: column; align-items: start; }
+  .honor-project h2 { font-size: 23px; }
+  .honor-project-photo { width: 100%; max-width: 300px; height: auto; aspect-ratio: 4 / 3; }
+}
